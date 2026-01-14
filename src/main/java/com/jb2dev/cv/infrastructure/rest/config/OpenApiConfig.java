@@ -13,7 +13,7 @@ public class OpenApiConfig {
     return new OpenAPI()
         .info(new Info()
             .title("jb2dev-cv-api")
-            .version("2.2.1")
+            .version("1.0.0")
             .description("Curriculum Vitae REST API (static JSON-backed portfolio project)."));
   }
 }

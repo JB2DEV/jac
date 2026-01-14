@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.jb2dev</groupId>
     <artifactId>cv-api</artifactId>
-    <version>1.3.1</version>
+    <version>1.0.0</version>
     <name>jb2dev-cv-api</name>
     <description>CV REST API portfolio project (Java 21, Spring Boot 3, Hexagonal/DDD).</description>
     <properties>
