@@ -1,0 +1,62 @@
+[
+  {
+    "id": 3031,
+    "name": "Java",
+    "category": "Language",
+    "skillExperience": 5
+  },
+  {
+    "id": 5358,
+    "name": "Kotlin",
+    "category": "Language",
+    "skillExperience": 4
+  },
+  {
+    "id": 2062,
+    "name": "Spring Boot",
+    "category": "Framework",
+    "skillExperience": 5
+  },
+  {
+    "id": 3816,
+    "name": "Docker",
+    "category": "DevOps",
+    "skillExperience": 3
+  },
+  {
+    "id": 8561,
+    "name": "Kubernetes",
+    "category": "DevOps",
+    "skillExperience": 2
+  },
+  {
+    "id": 9318,
+    "name": "Helm",
+    "category": "DevOps",
+    "skillExperience": 2
+  },
+  {
+    "id": 7011,
+    "name": "GitHub Actions",
+    "category": "CI/CD",
+    "skillExperience": 3
+  },
+  {
+    "id": 6700,
+    "name": "Swagger / OpenAPI",
+    "category": "API",
+    "skillExperience": 4
+  },
+  {
+    "id": 1465,
+    "name": "Git",
+    "category": "VCS",
+    "skillExperience": 4
+  },
+  {
+    "id": 6896,
+    "name": "Scrum",
+    "category": "Methodology",
+    "skillExperience": 4
+  }
+]

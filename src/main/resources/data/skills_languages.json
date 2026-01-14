@@ -1,0 +1,29 @@
+[
+  {
+    "id": 2354,
+    "language": "Spanish",
+    "listening": "Native",
+    "reading": "Native",
+    "spokenProduction": "Native",
+    "spokenInteraction": "Native",
+    "writing": "Native"
+  },
+  {
+    "id": 6411,
+    "language": "Catalan",
+    "listening": "Native",
+    "reading": "Native",
+    "spokenProduction": "Native",
+    "spokenInteraction": "Native",
+    "writing": "Native"
+  },
+  {
+    "id": 8161,
+    "language": "English",
+    "listening": "B1",
+    "reading": "B1",
+    "spokenProduction": "A2",
+    "spokenInteraction": "A2",
+    "writing": "B1"
+  }
+]
