@@ -1,13 +1,14 @@
 package com.jb2dev.cv.domain.training.model;
 
-import java.time.LocalDate;
+import java.time.YearMonth;
 
 public record TrainingItem(
     int id,
     String title,
     String provider,
     String location,
-    LocalDate startDate,
-    LocalDate endDate,
+    YearMonth issuedDate,
+    String credentialId,
+    String credentialUrl,
     String details
 ) {}

@@ -1,0 +1,57 @@
+[
+  {
+    "id": 6541,
+    "role": "Backend DevOps Engineer",
+    "company": "Telefónica",
+    "location": "Barcelona, Spain",
+    "startDate": "2025-03-01",
+    "endDate": null,
+    "current": true,
+    "summary": "Backend & DevOps contributions across multiple projects.",
+    "description": "Designed and maintained CI/CD pipelines with GitHub Actions, deployed workloads on Kubernetes using Helm, and developed backend services in Kotlin with Spring Boot following DDD and Hexagonal Architecture."
+  },
+  {
+    "id": 3032,
+    "role": "Full Stack Developer (DOME Marketplace)",
+    "company": "IN2 Ingeniería de la Información",
+    "location": "Barcelona, Spain",
+    "startDate": "2024-09-01",
+    "endDate": "2025-02-01",
+    "current": false,
+    "summary": "EU marketplace for Cloud & Edge services.",
+    "description": "Worked on a Java 17 + Spring Boot 3 backend and an AngularJS frontend, participating in CI/CD orchestration and deployments on Kubernetes with GitHub Flow."
+  },
+  {
+    "id": 7188,
+    "role": "Mobile Developer (IDEP / EUDI Wallet)",
+    "company": "GFT IT Consulting, S.L.",
+    "location": "Sant Cugat del Vallès, Spain",
+    "startDate": "2024-04-01",
+    "endDate": "2024-08-01",
+    "current": false,
+    "summary": "Migration to Kotlin/Jetpack Compose and mobile release preparation.",
+    "description": "Led migration of a native app to Kotlin/Jetpack Compose, implemented MVVM, coordinated mobile deployments, and managed documentation for iOS/Android publication."
+  },
+  {
+    "id": 9772,
+    "role": "Backend Developer (IDEP)",
+    "company": "GFT IT Consulting, S.L.",
+    "location": "Sant Cugat del Vallès, Spain",
+    "startDate": "2023-09-01",
+    "endDate": "2024-08-01",
+    "current": false,
+    "summary": "Verifiable credentials solution aligned with OpenID4VC.",
+    "description": "Designed microservices in Java/Kotlin with Spring Boot 3 and supported cloud deployments using Azure DevOps."
+  },
+  {
+    "id": 9213,
+    "role": "Junior Backend Developer",
+    "company": "BCNC GROUP",
+    "location": "Barcelona, Spain",
+    "startDate": "2021-11-14",
+    "endDate": "2023-09-15",
+    "current": false,
+    "summary": "Java microservices with Spring/Spring Boot and API documentation.",
+    "description": "Developed microservices in Java with Spring and Spring Boot, documented REST APIs with Swagger/OpenAPI, used GitFlow, and worked under Scrum."
+  }
+]

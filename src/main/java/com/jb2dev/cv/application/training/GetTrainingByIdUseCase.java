@@ -6,5 +6,5 @@ import java.util.Optional;
 
 @FunctionalInterface
 public interface GetTrainingByIdUseCase {
-  Optional<TrainingItem> execute(int id);
+  Optional<TrainingItem> execute(String credentialId);
 }
