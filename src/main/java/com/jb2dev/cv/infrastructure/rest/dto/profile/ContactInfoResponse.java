@@ -1,6 +1,6 @@
-package com.jb2dev.cv.domain.profile.model;
+package com.jb2dev.cv.infrastructure.rest.dto.profile;
 
-public record ContactInfo(
+public record ContactInfoResponse(
     String address,
     String email,
     String mobilePhone,

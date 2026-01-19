@@ -1,6 +1,6 @@
-package com.jb2dev.cv.domain.profile.model;
+package com.jb2dev.cv.infrastructure.rest.dto.profile;
 
-public record PersonalInfo(
+public record PersonalInfoResponse(
     String fullName,
     String birthDate,
     String nationality,
