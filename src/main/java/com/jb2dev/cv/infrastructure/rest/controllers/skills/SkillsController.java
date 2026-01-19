@@ -3,6 +3,7 @@ package com.jb2dev.cv.infrastructure.rest.controllers.skills;
 import com.jb2dev.cv.application.skills.*;
 import com.jb2dev.cv.infrastructure.rest.dto.skills.LanguageSkillResponse;
 import com.jb2dev.cv.infrastructure.rest.dto.skills.SoftSkillResponse;
+import com.jb2dev.cv.infrastructure.rest.dto.skills.TechnicalSkillDetailResponse;
 import com.jb2dev.cv.infrastructure.rest.dto.skills.TechnicalSkillResponse;
 import com.jb2dev.cv.infrastructure.rest.mappers.skills.SkillsRestMapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -58,7 +59,7 @@ public class SkillsController {
 
   @Operation(summary = "Get a technical skill by id")
   @GetMapping("/technical/{id}")
-  public ResponseEntity<TechnicalSkillResponse> technicalById(
+  public ResponseEntity<TechnicalSkillDetailResponse> technicalById(
       @Parameter(description = "4-digit numeric id", example = "1234") @PathVariable int id
   ) {
     return technicalByIdUseCase.execute(id)

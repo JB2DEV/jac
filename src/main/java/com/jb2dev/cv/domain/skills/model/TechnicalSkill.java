@@ -3,6 +3,6 @@ package com.jb2dev.cv.domain.skills.model;
 public record TechnicalSkill(
     int id,
     String name,
-    String category,
+    TechnicalSkillCategory category,
     int skillExperience
 ) {}

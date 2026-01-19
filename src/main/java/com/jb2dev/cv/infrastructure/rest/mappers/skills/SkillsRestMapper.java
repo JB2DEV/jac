@@ -5,6 +5,7 @@ import com.jb2dev.cv.domain.skills.model.SoftSkill;
 import com.jb2dev.cv.domain.skills.model.TechnicalSkill;
 import com.jb2dev.cv.infrastructure.rest.dto.skills.LanguageSkillResponse;
 import com.jb2dev.cv.infrastructure.rest.dto.skills.SoftSkillResponse;
+import com.jb2dev.cv.infrastructure.rest.dto.skills.TechnicalSkillDetailResponse;
 import com.jb2dev.cv.infrastructure.rest.dto.skills.TechnicalSkillResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
@@ -16,7 +17,7 @@ public interface SkillsRestMapper {
   LanguageSkillResponse toResponse(LanguageSkill skill);
   List<LanguageSkillResponse> toLanguageResponseList(List<LanguageSkill> skills);
 
-  TechnicalSkillResponse toResponse(TechnicalSkill skill);
+  TechnicalSkillDetailResponse toResponse(TechnicalSkill skill);
   List<TechnicalSkillResponse> toTechnicalResponseList(List<TechnicalSkill> skills);
 
   SoftSkillResponse toResponse(SoftSkill skill);
