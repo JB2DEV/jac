@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: jb2dev-cv-api
+  jackson:
+    property-naming-strategy: SNAKE_CASE
 
 management:
   endpoints:

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -22,12 +23,12 @@ public class JsonTrainingQueryAdapter implements TrainingQueryPort {
   public List<TrainingItem> list() {
     var items = reader.read("data/training.json", TYPE);
     return items.stream()
-        .sorted(Comparator.comparing(TrainingItem::startDate).reversed())
+        .sorted(Comparator.comparing(TrainingItem::issuedDate).reversed())
         .toList();
   }
 
   @Override
-  public Optional<TrainingItem> findById(int id) {
-    return list().stream().filter(i -> i.id() == id).findFirst();
+  public Optional<TrainingItem> findById(String credentialId) {
+    return list().stream().filter(i -> Objects.equals(i.credentialId(), credentialId)).findFirst();
   }
 }

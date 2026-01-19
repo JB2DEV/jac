@@ -14,7 +14,7 @@ public class GetTrainingByIdService implements GetTrainingByIdUseCase {
   private final TrainingQueryPort queryPort;
 
   @Override
-  public Optional<TrainingItem> execute(int id) {
-    return queryPort.findById(id);
+  public Optional<TrainingItem> execute(String credentialId) {
+    return queryPort.findById(credentialId);
   }
 }

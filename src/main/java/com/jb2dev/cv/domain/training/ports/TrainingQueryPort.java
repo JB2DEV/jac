@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface TrainingQueryPort {
   List<TrainingItem> list();
-  Optional<TrainingItem> findById(int id);
+  Optional<TrainingItem> findById(String credentialId);
 }

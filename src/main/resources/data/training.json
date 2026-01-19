@@ -1,11 +1,113 @@
 [
   {
-    "id": 4877,
-    "title": "Backend Specialization & DevOps Practice",
+    "id": 2614,
+    "title": "Arquitectura Hexagonal con Spring Boot",
     "provider": "OpenWebinars",
-    "location": "Spain (online)",
-    "startDate": "2025-03-01",
-    "endDate": "2025-03-31",
-    "details": "Specialization in backend development with DevOps hands-on practice."
+    "location": "España (online)",
+    "issued_date": "2025-03",
+    "credential_id": "4Aes",
+    "credential_url": "https://openwebinars.net/cert/4Aes",
+    "details": "Diseño de aplicaciones siguiendo arquitectura hexagonal y principios DDD con Spring Boot."
+  },
+  {
+    "id": 7392,
+    "title": "Curso de Clean Code",
+    "provider": "OpenWebinars",
+    "location": "España (online)",
+    "issued_date": "2025-03",
+    "credential_id": "pSLh",
+    "credential_url": "https://openwebinars.net/cert/pSLh",
+    "details": "Buenas prácticas de Clean Code y fundamentos de Clean Architecture."
+  },
+  {
+    "id": 5841,
+    "title": "Curso de Helm",
+    "provider": "OpenWebinars",
+    "location": "España (online)",
+    "issued_date": "2025-03",
+    "credential_id": "pOip",
+    "credential_url": "https://openwebinars.net/cert/pOip",
+    "details": "Gestión de despliegues en Kubernetes mediante Helm y Helm Charts."
+  },
+  {
+    "id": 9036,
+    "title": "Desarrollador con Kubernetes",
+    "provider": "OpenWebinars",
+    "location": "España (online)",
+    "issued_date": "2025-03",
+    "credential_id": "KIPu",
+    "credential_url": "https://openwebinars.net/cert/KIPu",
+    "details": "Desarrollo y despliegue de aplicaciones en Kubernetes con CI/CD."
+  },
+  {
+    "id": 1768,
+    "title": "Fundamentos de Spring Boot",
+    "provider": "OpenWebinars",
+    "location": "España (online)",
+    "issued_date": "2025-03",
+    "credential_id": "fKSr",
+    "credential_url": "https://openwebinars.net/cert/fKSr",
+    "details": "Bases del desarrollo backend con Spring Boot."
+  },
+  {
+    "id": 6925,
+    "title": "IA Generativa en tu trabajo",
+    "provider": "OpenWebinars",
+    "location": "España (online)",
+    "issued_date": "2025-03",
+    "credential_id": "T4DP",
+    "credential_url": "https://openwebinars.net/cert/T4DP",
+    "details": "Uso práctico de inteligencia artificial generativa en el entorno profesional."
+  },
+  {
+    "id": 4389,
+    "title": "Implementa una API Reactiva con Spring WebFlux y R2DBC",
+    "provider": "OpenWebinars",
+    "location": "España (online)",
+    "issued_date": "2025-03",
+    "credential_id": "Hpm7",
+    "credential_url": "https://openwebinars.net/cert/Hpm7",
+    "details": "Desarrollo de APIs reactivas usando Spring WebFlux y acceso a datos con R2DBC."
+  },
+  {
+    "id": 8157,
+    "title": "Introducción a Spring WebFlux con Kotlin",
+    "provider": "OpenWebinars",
+    "location": "España (online)",
+    "issued_date": "2025-03",
+    "credential_id": "QSI9",
+    "credential_url": "https://openwebinars.net/cert/QSI9",
+    "details": "Introducción al desarrollo reactivo con Spring WebFlux utilizando Kotlin."
+  },
+  {
+    "id": 3506,
+    "title": "Mantener tu esquema de base de datos con Spring Data JPA y Liquibase",
+    "provider": "OpenWebinars",
+    "location": "España (online)",
+    "issued_date": "2025-03",
+    "credential_id": "LKI1",
+    "credential_url": "https://openwebinars.net/cert/LKI1",
+    "details": "Gestión y versionado del esquema de base de datos con Spring Data JPA y Liquibase."
+  },
+  {
+    "id": 8637,
+    "title": "Microservicios con Spring Boot y  Spring Cloud",
+    "provider": "OpenWebinars",
+    "location": "España (online)",
+    "issued_date": "2025-03",
+    "credential_id": "EUJB",
+    "credential_url": "https://openwebinars.net/cert/EUJB",
+    "details": "Diseño e implementación de arquitecturas de microservicios con Spring Boot y Spring Cloud, incluyendo configuración centralizada, descubrimiento de servicios, comunicación entre servicios y tolerancia a fallos."
+
+  },
+  {
+    "id": 1496,
+    "title": "Seguridad y Autenticación en Spring",
+    "provider": "OpenWebinars",
+    "location": "España (online)",
+    "issued_date": "2025-03",
+    "credential_id": "n67h",
+    "credential_url": "https://openwebinars.net/cert/n67h",
+    "details": "Implementación de mecanismos de seguridad y autenticación en aplicaciones Spring mediante Spring Security, control de acceso, autenticación basada en tokens y protección de APIs."
   }
 ]
