@@ -1,7 +1,6 @@
 package com.jb2dev.cv.infrastructure.rest.dto.skills;
 
-public record TechnicalSkillResponse(
-    int id,
+public record TechnicalSkillDetailResponse(
     String name,
     String category,
     int skillExperience
