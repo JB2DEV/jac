@@ -6,15 +6,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class ListTechnicalSkillsService implements ListTechnicalSkillsUseCase {
+public class GetTechnicalSkillByNameService implements GetTechnicalSkillByNameUseCase {
 
   private final SkillsQueryPort queryPort;
 
-  @Override
-  public List<TechnicalSkill> execute() {
-    return queryPort.technical();
-  }
+    @Override
+    public List<TechnicalSkill> execute(String name) {
+        return queryPort.technicalByName(name);
+    }
 }

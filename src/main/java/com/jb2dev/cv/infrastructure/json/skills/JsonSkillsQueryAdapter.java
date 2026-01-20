@@ -33,13 +33,27 @@ public class JsonSkillsQueryAdapter implements SkillsQueryPort {
   }
 
   @Override
-  public List<TechnicalSkill> technical() {
+  public List<TechnicalSkill> technicalList() {
     return reader.read("data/skills_technical.json", TECH_TYPE);
   }
 
   @Override
-  public Optional<TechnicalSkill> technicalById(int id) {
-    return technical().stream().filter(s -> s.id() == id).findFirst();
+  public List<TechnicalSkill> technicalByCategory(String category) {
+      String needle = category.toLowerCase();
+
+      return technicalList().stream()
+              .filter(skill -> skill.category().getLabel().toLowerCase().equals(needle)
+                      || skill.category().name().toLowerCase().equals(needle))
+              .toList();
+  }
+
+  @Override
+  public List<TechnicalSkill> technicalByName(String name) {
+      String needle = name.toLowerCase();
+
+      return technicalList().stream()
+              .filter(skill -> skill.name().toLowerCase().contains(needle))
+              .toList();
   }
 
   @Override

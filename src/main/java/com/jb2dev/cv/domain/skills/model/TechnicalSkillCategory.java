@@ -1,5 +1,8 @@
 package com.jb2dev.cv.domain.skills.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum TechnicalSkillCategory {
 
     LANGUAGE(1, "Language"),
@@ -27,12 +30,20 @@ public enum TechnicalSkillCategory {
         this.label = label;
     }
 
-    public int getId() {
-        return id;
-    }
-
+    @JsonValue
     public String getLabel() {
         return label;
+    }
+
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    public static TechnicalSkillCategory fromJson(String value) {
+        for (TechnicalSkillCategory category : values()) {
+            if (category.label.equalsIgnoreCase(value)
+                    || category.name().equalsIgnoreCase(value)) {
+                return category;
+            }
+        }
+        throw new IllegalArgumentException("Unknown TechnicalSkillCategory: " + value);
     }
 
     public static TechnicalSkillCategory fromId(int id) {
@@ -42,14 +53,5 @@ public enum TechnicalSkillCategory {
             }
         }
         throw new IllegalArgumentException("Unknown TechnicalSkillCategory id: " + id);
-    }
-
-    public static TechnicalSkillCategory fromLabel(String label) {
-        for (TechnicalSkillCategory category : values()) {
-            if (category.label.equalsIgnoreCase(label)) {
-                return category;
-            }
-        }
-        throw new IllegalArgumentException("Unknown TechnicalSkillCategory label: " + label);
     }
 }

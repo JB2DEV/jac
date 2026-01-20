@@ -12,8 +12,9 @@ public interface SkillsQueryPort {
   List<LanguageSkill> languages();
   Optional<LanguageSkill> languageById(int id);
 
-  List<TechnicalSkill> technical();
-  Optional<TechnicalSkill> technicalById(int id);
+  List<TechnicalSkill> technicalList();
+  List<TechnicalSkill> technicalByCategory(String category);
+  List<TechnicalSkill> technicalByName(String name);
 
   List<SoftSkill> soft();
   Optional<SoftSkill> softById(int id);
