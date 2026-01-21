@@ -15,19 +15,24 @@ import java.util.Optional;
 @Component
 public class JsonExperienceQueryAdapter implements ExperienceRepository {
 
-  private static final TypeReference<List<ExperienceItem>> TYPE = new TypeReference<>() {};
-  private final ClasspathJsonReader reader;
+    private static final TypeReference<List<ExperienceItem>> TYPE = new TypeReference<>() {};
+    private final ClasspathJsonReader reader;
 
-  @Override
-  public List<ExperienceItem> findAllExperiences() {
-    var items = reader.read("data/experience.json", TYPE);
-    return items.stream()
-        .sorted(Comparator.comparing(ExperienceItem::startDate).reversed())
-        .toList();
-  }
+    @Override
+    public List<ExperienceItem> findAllExperiences() {
+        var items = reader.read("data/experience.json", TYPE);
+        return items.stream()
+                .sorted(Comparator.comparing(
+                        ExperienceItem::startDate,
+                        Comparator.nullsLast(Comparator.naturalOrder())
+                ).reversed())
+                .toList();
+    }
 
-  @Override
-  public Optional<ExperienceItem> findExperienceById(int id) {
-    return findAllExperiences().stream().filter(i -> i.id() == id).findFirst();
-  }
+    @Override
+    public Optional<ExperienceItem> findExperienceById(int id) {
+        return findAllExperiences().stream()
+                .filter(i -> i.id() == id)
+                .findFirst();
+    }
 }
