@@ -4,8 +4,8 @@
     "language": "Spanish",
     "listening": "Native",
     "reading": "Native",
-    "spokenProduction": "Native",
-    "spokenInteraction": "Native",
+    "spoken_production": "Native",
+    "spoken_interaction": "Native",
     "writing": "Native"
   },
   {
@@ -13,8 +13,8 @@
     "language": "Catalan",
     "listening": "Native",
     "reading": "Native",
-    "spokenProduction": "Native",
-    "spokenInteraction": "Native",
+    "spoken_production": "Native",
+    "spoken_interaction": "Native",
     "writing": "Native"
   },
   {
@@ -22,8 +22,8 @@
     "language": "English",
     "listening": "B1",
     "reading": "B1",
-    "spokenProduction": "A2",
-    "spokenInteraction": "A2",
+    "spoken_production": "A2",
+    "spoken_interaction": "A2",
     "writing": "B1"
   }
 ]
