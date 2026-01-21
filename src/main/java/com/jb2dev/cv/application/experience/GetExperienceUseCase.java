@@ -5,6 +5,6 @@ import com.jb2dev.cv.domain.experience.model.ExperienceItem;
 import java.util.Optional;
 
 @FunctionalInterface
-public interface GetExperienceByIdUseCase {
+public interface GetExperienceUseCase {
   Optional<ExperienceItem> execute(int id);
 }

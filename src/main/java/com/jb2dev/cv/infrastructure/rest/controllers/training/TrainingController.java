@@ -1,7 +1,7 @@
 package com.jb2dev.cv.infrastructure.rest.controllers.training;
 
-import com.jb2dev.cv.application.training.GetTrainingByIdUseCase;
-import com.jb2dev.cv.application.training.ListTrainingUseCase;
+import com.jb2dev.cv.application.training.GetTrainingUseCase;
+import com.jb2dev.cv.application.training.ListTrainingsUseCase;
 import com.jb2dev.cv.infrastructure.rest.dto.training.TrainingDetailResponse;
 import com.jb2dev.cv.infrastructure.rest.dto.training.TrainingResponse;
 import com.jb2dev.cv.infrastructure.rest.mappers.training.TrainingRestMapper;
@@ -27,8 +27,8 @@ import java.util.List;
 @RequestMapping("/api/v1/training")
 public class TrainingController {
 
-    private final ListTrainingUseCase listUseCase;
-    private final GetTrainingByIdUseCase getByIdUseCase;
+    private final ListTrainingsUseCase listUseCase;
+    private final GetTrainingUseCase getByIdUseCase;
     private final TrainingRestMapper mapper;
 
     @Operation(

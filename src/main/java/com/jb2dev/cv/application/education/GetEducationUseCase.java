@@ -2,9 +2,9 @@ package com.jb2dev.cv.application.education;
 
 import com.jb2dev.cv.domain.education.model.EducationItem;
 
-import java.util.List;
+import java.util.Optional;
 
 @FunctionalInterface
-public interface ListEducationUseCase {
-  List<EducationItem> execute();
+public interface GetEducationUseCase {
+  Optional<EducationItem> execute(int id);
 }
