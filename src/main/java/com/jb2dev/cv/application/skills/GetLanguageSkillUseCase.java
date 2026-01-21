@@ -5,6 +5,6 @@ import com.jb2dev.cv.domain.skills.model.LanguageSkill;
 import java.util.Optional;
 
 @FunctionalInterface
-public interface GetLanguageSkillByIdUseCase {
+public interface GetLanguageSkillUseCase {
   Optional<LanguageSkill> execute(int id);
 }

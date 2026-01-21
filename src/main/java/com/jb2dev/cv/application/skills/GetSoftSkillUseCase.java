@@ -5,6 +5,6 @@ import com.jb2dev.cv.domain.skills.model.SoftSkill;
 import java.util.Optional;
 
 @FunctionalInterface
-public interface GetSoftSkillByIdUseCase {
+public interface GetSoftSkillUseCase {
   Optional<SoftSkill> execute(int id);
 }
