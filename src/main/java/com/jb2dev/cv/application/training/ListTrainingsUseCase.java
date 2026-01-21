@@ -2,9 +2,9 @@ package com.jb2dev.cv.application.training;
 
 import com.jb2dev.cv.domain.training.model.TrainingItem;
 
-import java.util.Optional;
+import java.util.List;
 
 @FunctionalInterface
-public interface GetTrainingByIdUseCase {
-  Optional<TrainingItem> execute(String credentialId);
+public interface ListTrainingsUseCase {
+  List<TrainingItem> execute();
 }

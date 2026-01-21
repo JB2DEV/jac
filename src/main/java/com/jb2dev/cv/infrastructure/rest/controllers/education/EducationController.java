@@ -1,7 +1,7 @@
 package com.jb2dev.cv.infrastructure.rest.controllers.education;
 
-import com.jb2dev.cv.application.education.GetEducationByIdUseCase;
-import com.jb2dev.cv.application.education.ListEducationUseCase;
+import com.jb2dev.cv.application.education.GetEducationUseCase;
+import com.jb2dev.cv.application.education.ListEducationsUseCase;
 import com.jb2dev.cv.infrastructure.rest.dto.education.EducationResponse;
 import com.jb2dev.cv.infrastructure.rest.mappers.education.EducationRestMapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,8 +22,8 @@ import java.util.List;
 @RequestMapping("/api/v1/education")
 public class EducationController {
 
-  private final ListEducationUseCase listUseCase;
-  private final GetEducationByIdUseCase getByIdUseCase;
+  private final ListEducationsUseCase listUseCase;
+  private final GetEducationUseCase getByIdUseCase;
   private final EducationRestMapper mapper;
 
   @Operation(summary = "List formal education entries")

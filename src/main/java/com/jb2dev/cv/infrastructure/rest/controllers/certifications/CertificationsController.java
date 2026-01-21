@@ -1,6 +1,6 @@
 package com.jb2dev.cv.infrastructure.rest.controllers.certifications;
 
-import com.jb2dev.cv.application.certifications.GetCertificationByIdUseCase;
+import com.jb2dev.cv.application.certifications.GetCertificationUseCase;
 import com.jb2dev.cv.application.certifications.ListCertificationsUseCase;
 import com.jb2dev.cv.infrastructure.rest.dto.certifications.CertificationResponse;
 import com.jb2dev.cv.infrastructure.rest.mappers.certifications.CertificationRestMapper;
@@ -23,7 +23,7 @@ import java.util.List;
 public class CertificationsController {
 
   private final ListCertificationsUseCase listUseCase;
-  private final GetCertificationByIdUseCase getByIdUseCase;
+  private final GetCertificationUseCase getByIdUseCase;
   private final CertificationRestMapper mapper;
 
   @Operation(summary = "List licenses and certifications")

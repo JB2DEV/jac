@@ -1,14 +1,14 @@
 package com.jb2dev.cv.infrastructure.json.profile;
 
 import com.jb2dev.cv.domain.profile.model.ContactInfo;
-import com.jb2dev.cv.domain.profile.ports.ContactInfoQueryPort;
+import com.jb2dev.cv.domain.profile.ports.ContactInfoRepository;
 import com.jb2dev.cv.infrastructure.json.ClasspathJsonReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
-public class JsonContactInfoQueryAdapter implements ContactInfoQueryPort {
+public class JsonContactInfoQueryAdapter implements ContactInfoRepository {
 
   private final ClasspathJsonReader reader;
 

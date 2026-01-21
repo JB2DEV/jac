@@ -1,6 +1,6 @@
 package com.jb2dev.cv.infrastructure.rest.controllers.experience;
 
-import com.jb2dev.cv.application.experience.GetExperienceByIdUseCase;
+import com.jb2dev.cv.application.experience.GetExperienceUseCase;
 import com.jb2dev.cv.application.experience.ListExperiencesUseCase;
 import com.jb2dev.cv.infrastructure.rest.dto.experience.ExperienceResponse;
 import com.jb2dev.cv.infrastructure.rest.mappers.experience.ExperienceRestMapper;
@@ -23,7 +23,7 @@ import java.util.List;
 public class ExperienceController {
 
   private final ListExperiencesUseCase listUseCase;
-  private final GetExperienceByIdUseCase getByIdUseCase;
+  private final GetExperienceUseCase getByIdUseCase;
   private final ExperienceRestMapper mapper;
 
   @Operation(summary = "List experience entries")
