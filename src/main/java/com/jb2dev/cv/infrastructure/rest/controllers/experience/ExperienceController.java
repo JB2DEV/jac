@@ -100,8 +100,8 @@ public class ExperienceController {
                                               "role": "Senior Software Engineer",
                                               "company": "Acme Corp",
                                               "location": "Remote",
-                                              "startDate": "2021-01-01",
-                                              "endDate": "2024-06-30",
+                                              "start_date": "2021-01-01",
+                                              "end_date": "2024-06-30",
                                               "current": false,
                                               "summary": "Backend development with Java and Spring Boot",
                                               "description": "Design and implementation of scalable backend services using Spring Boot, JPA, and PostgreSQL."
@@ -139,7 +139,7 @@ public class ExperienceController {
     public ResponseEntity<ExperienceDetailResponse> getExperienceById(
             @Parameter(
                     description = "4-digit numeric id of the experience entry",
-                    example = "101"
+                    example = "1234"
             )
             @PathVariable("id") int id
     ) {

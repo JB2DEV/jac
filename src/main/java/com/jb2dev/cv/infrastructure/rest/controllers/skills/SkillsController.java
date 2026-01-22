@@ -78,7 +78,7 @@ public class SkillsController {
             }
     )
     @GetMapping("/languages")
-    public ResponseEntity<List<LanguageSkillResponse>> languages() {
+    public ResponseEntity<List<LanguageSkillResponse>> getLanguageSkills() {
         return ResponseEntity.ok(mapper.toLanguageResponseList(languagesUseCase.execute()));
     }
 
@@ -136,8 +136,11 @@ public class SkillsController {
             }
     )
     @GetMapping("/languages/{id}")
-    public ResponseEntity<LanguageSkillDetailResponse> languageById(
-            @Parameter(description = "4-digit numeric id", example = "1234")
+    public ResponseEntity<LanguageSkillDetailResponse> getLanguageSkillById(
+            @Parameter(
+                    description = "4-digit numeric id of the education entry",
+                    example = "1234"
+            )
             @PathVariable("id") int id
     ) {
         return languageByIdUseCase.execute(id)
@@ -210,7 +213,7 @@ public class SkillsController {
     )
 
     @GetMapping("/technical")
-    public ResponseEntity<List<TechnicalSkillDetailResponse>> technical(
+    public ResponseEntity<List<TechnicalSkillDetailResponse>> getTechnicalSkills(
             @RequestParam(name = "name", required = false) String name,
             @RequestParam(name = "category", required = false) String category
     ) {
@@ -263,7 +266,7 @@ public class SkillsController {
             }
     )
     @GetMapping("/soft")
-    public ResponseEntity<List<SoftSkillResponse>> soft() {
+    public ResponseEntity<List<SoftSkillResponse>> getSoftSkills() {
         return ResponseEntity.ok(mapper.toSoftResponseList(softUseCase.execute()));
     }
 
@@ -312,10 +315,10 @@ public class SkillsController {
             }
     )
     @GetMapping("/soft/{id}")
-    public ResponseEntity<SoftSkillResponse> softById(
+    public ResponseEntity<SoftSkillResponse> getSoftSkillById(
             @Parameter(
                     description = "4-digit numeric id of the soft skill",
-                    example = "1001"
+                    example = "1234"
             )
             @PathVariable("id") int id
     ) {
