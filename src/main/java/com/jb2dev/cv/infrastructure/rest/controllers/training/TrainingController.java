@@ -46,11 +46,11 @@ public class TrainingController {
                         [
                           {
                             "title": "Backend Development with Spring Boot",
-                            "credentialId": "EUJB"
+                            "credential_id": "EUJB"
                           },
                           {
                             "title": "Security and Authentication in Spring",
-                            "credentialId": "N67H"
+                            "credential_id": "N67H"
                           }
                         ]
                     """)
@@ -71,7 +71,7 @@ public class TrainingController {
             }
     )
     @GetMapping
-    public ResponseEntity<List<TrainingResponse>> list() {
+    public ResponseEntity<List<TrainingResponse>> getTrainings() {
         return ResponseEntity.ok(mapper.toResponseList(listUseCase.execute()));
     }
 
@@ -91,9 +91,9 @@ public class TrainingController {
                           "title": "Backend Development with Spring Boot",
                           "provider": "OpenWebinars",
                           "location": "España (online)",
-                          "issuedDate": "2025-03",
-                          "credentialId": "EUJB",
-                          "credentialUrl": "https://openwebinars.net/cert/EUJB",
+                          "issued_date": "2025-03",
+                          "credential_id": "EUJB",
+                          "credential_url": "https://openwebinars.net/cert/EUJB",
                           "details": "Specialization in backend development with DevOps hands-on practice."
                         }
                     """)
@@ -126,7 +126,7 @@ public class TrainingController {
             }
     )
     @GetMapping("/{credentialId}")
-    public ResponseEntity<TrainingDetailResponse> getById(
+    public ResponseEntity<TrainingDetailResponse> getTrainingById(
             @Parameter(
                     description = "Unique credential ID of the training entry",
                     required = true,
