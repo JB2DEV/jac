@@ -1,0 +1,241 @@
+{
+  "info": {
+    "_postman_id": "b1e1e1e1-0000-0000-0000-000000000001",
+    "name": "JAC API Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Example collection for the JAC API with internationalization using Accept-Language. All main endpoints are included."
+  },
+  "item": [
+    {
+      "name": "List Education (es_ES)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept-Language", "value": "es_ES" }],
+        "url": { "raw": "http://localhost:8080/api/v1/education", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "v1", "education"] }
+      }
+    },
+    {
+      "name": "List Education (en_EN)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept-Language", "value": "en_EN" }],
+        "url": { "raw": "http://localhost:8080/api/v1/education", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "v1", "education"] }
+      }
+    },
+    {
+      "name": "Get Education by ID (es_ES)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept-Language", "value": "es_ES" }],
+        "url": { "raw": "http://localhost:8080/api/v1/education/8792", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "v1", "education", "3012"] }
+      }
+    },
+    {
+      "name": "Get Education by ID (en_EN)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept-Language", "value": "en_EN" }],
+        "url": { "raw": "http://localhost:8080/api/v1/education/8792", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "v1", "education", "3012"] }
+      }
+    },
+    {
+      "name": "List Experience (es_ES)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept-Language", "value": "es_ES" }],
+        "url": { "raw": "http://localhost:8080/api/v1/experience", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "v1", "experience"] }
+      }
+    },
+    {
+      "name": "List Experience (en_EN)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept-Language", "value": "en_EN" }],
+        "url": { "raw": "http://localhost:8080/api/v1/experience", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "v1", "experience"] }
+      }
+    },
+    {
+      "name": "Get Experience by ID (es_ES)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept-Language", "value": "es_ES" }],
+        "url": { "raw": "http://localhost:8080/api/v1/experience/6541", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "v1", "experience", "6541"] }
+      }
+    },
+    {
+      "name": "Get Experience by ID (en_EN)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept-Language", "value": "en_EN" }],
+        "url": { "raw": "http://localhost:8080/api/v1/experience/6541", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "v1", "experience", "6541"] }
+      }
+    },
+    {
+      "name": "Get Personal Info (es_ES)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept-Language", "value": "es_ES" }],
+        "url": { "raw": "http://localhost:8080/api/v1/personal", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "v1", "personal"] }
+      }
+    },
+    {
+      "name": "Get Personal Info (en_EN)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept-Language", "value": "en_EN" }],
+        "url": { "raw": "http://localhost:8080/api/v1/personal", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "v1", "personal"] }
+      }
+    },
+    {
+      "name": "Get Contact Info (es_ES)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept-Language", "value": "es_ES" }],
+        "url": { "raw": "http://localhost:8080/api/v1/contact", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "v1", "contact"] }
+      }
+    },
+    {
+      "name": "Get Contact Info (en_EN)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept-Language", "value": "en_EN" }],
+        "url": { "raw": "http://localhost:8080/api/v1/contact", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "v1", "contact"] }
+      }
+    },
+    {
+      "name": "List Language Skills (es_ES)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept-Language", "value": "es_ES" }],
+        "url": { "raw": "http://localhost:8080/api/v1/skills/languages", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "v1", "skills", "languages"] }
+      }
+    },
+    {
+      "name": "List Language Skills (en_EN)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept-Language", "value": "en_EN" }],
+        "url": { "raw": "http://localhost:8080/api/v1/skills/languages", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "v1", "skills", "languages"] }
+      }
+    },
+    {
+      "name": "Get Language Skill by ID (es_ES)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept-Language", "value": "es_ES" }],
+        "url": { "raw": "http://localhost:8080/api/v1/skills/languages/2354", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "v1", "skills", "languages", "2354"] }
+      }
+    },
+    {
+      "name": "Get Language Skill by ID (en_EN)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept-Language", "value": "en_EN" }],
+        "url": { "raw": "http://localhost:8080/api/v1/skills/languages/2354", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "v1", "skills", "languages", "2354"] }
+      }
+    },
+    {
+      "name": "List Technical Skills",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:8080/api/v1/skills/technical", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "v1", "skills", "technical"] }
+      }
+    },
+    {
+      "name": "List Technical Skills by Category",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8080/api/v1/skills/technical?category=Framework",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "skills", "technical"],
+          "query": [
+            { "key": "category", "value": "Framework" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "List Technical Skills by Name",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8080/api/v1/skills/technical?name=Java",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "skills", "technical"],
+          "query": [
+            { "key": "name", "value": "Java" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "List Soft Skills (es_ES)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept-Language", "value": "es_ES" }],
+        "url": { "raw": "http://localhost:8080/api/v1/skills/soft", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "v1", "skills", "soft"] }
+      }
+    },
+    {
+      "name": "List Soft Skills (en_EN)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept-Language", "value": "en_EN" }],
+        "url": { "raw": "http://localhost:8080/api/v1/skills/soft", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "v1", "skills", "soft"] }
+      }
+    },
+    {
+      "name": "Get Soft Skill by ID (es_ES)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept-Language", "value": "es_ES" }],
+        "url": { "raw": "http://localhost:8080/api/v1/skills/soft/4729", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "v1", "skills", "soft", "4729"] }
+      }
+    },
+    {
+      "name": "Get Soft Skill by ID (en_EN)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept-Language", "value": "en_EN" }],
+        "url": { "raw": "http://localhost:8080/api/v1/skills/soft/4729", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "v1", "skills", "soft", "4729"] }
+      }
+    },
+    {
+      "name": "List Training (es_ES)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept-Language", "value": "es_ES" }],
+        "url": { "raw": "http://localhost:8080/api/v1/training", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "v1", "training"] }
+      }
+    },
+    {
+      "name": "List Training (en_EN)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept-Language", "value": "en_EN" }],
+        "url": { "raw": "http://localhost:8080/api/v1/training", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "v1", "training"] }
+      }
+    },
+    {
+      "name": "Get Training by Credential ID (es_ES)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept-Language", "value": "es_ES" }],
+        "url": { "raw": "http://localhost:8080/api/v1/training/EUJB", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "v1", "training", "EUJB"] }
+      }
+    },
+    {
+      "name": "Get Training by Credential ID (en_EN)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept-Language", "value": "en_EN" }],
+        "url": { "raw": "http://localhost:8080/api/v1/training/EUJB", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api", "v1", "training", "EUJB"] }
+      }
+    }
+  ]
+}

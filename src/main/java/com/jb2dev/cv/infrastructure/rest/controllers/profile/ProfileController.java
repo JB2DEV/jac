@@ -2,10 +2,13 @@ package com.jb2dev.cv.infrastructure.rest.controllers.profile;
 
 import com.jb2dev.cv.application.profile.GetContactInfoUseCase;
 import com.jb2dev.cv.application.profile.GetPersonalInfoUseCase;
+import com.jb2dev.cv.domain.Language;
 import com.jb2dev.cv.infrastructure.rest.dto.profile.ContactInfoResponse;
 import com.jb2dev.cv.infrastructure.rest.dto.profile.PersonalInfoResponse;
 import com.jb2dev.cv.infrastructure.rest.mappers.profile.ProfileRestMapper;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -14,7 +17,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "Profile", description = "Core personal and contact profile information.")
@@ -34,6 +39,9 @@ public class ProfileController {
             This endpoint provides general identity data such as
             full name, date of birth, nationality, and gender.
             """,
+            parameters = {
+                @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Idioma de la respuesta: es_ES para español, en_EN para inglés", example = "es_ES", required = false)
+            },
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -66,8 +74,9 @@ public class ProfileController {
             }
     )
   @GetMapping("/personal")
-  public ResponseEntity<PersonalInfoResponse> getPersonalInfo() {
-    return ResponseEntity.ok(mapper.toResponse(personalInfoUseCase.execute()));
+  public ResponseEntity<PersonalInfoResponse> getPersonalInfo(@RequestHeader(value = "Accept-Language", defaultValue = "es_ES") String locale) {
+    Language language = Language.fromCode(locale);
+    return ResponseEntity.ok(mapper.toResponse(personalInfoUseCase.execute(language)));
   }
 
     @Operation(
@@ -77,6 +86,9 @@ public class ProfileController {
             This includes physical address, email, phone numbers,
             and relevant online profiles such as LinkedIn or GitHub.
             """,
+            parameters = {
+                @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Idioma de la respuesta: es_ES para español, en_EN para inglés", example = "es_ES", required = false)
+            },
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -112,7 +124,8 @@ public class ProfileController {
             }
     )
   @GetMapping("/contact")
-  public ResponseEntity<ContactInfoResponse> getContactInfo() {
-    return ResponseEntity.ok(mapper.toResponse(contactInfoUseCase.execute()));
+  public ResponseEntity<ContactInfoResponse> getContactInfo(@RequestHeader(value = "Accept-Language", defaultValue = "es_ES") String locale) {
+    Language language = Language.fromCode(locale);
+    return ResponseEntity.ok(mapper.toResponse(contactInfoUseCase.execute(language)));
   }
 }

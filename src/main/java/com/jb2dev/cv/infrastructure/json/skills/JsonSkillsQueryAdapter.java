@@ -1,6 +1,7 @@
 package com.jb2dev.cv.infrastructure.json.skills;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.jb2dev.cv.domain.Language;
 import com.jb2dev.cv.domain.skills.model.LanguageSkill;
 import com.jb2dev.cv.domain.skills.model.SoftSkill;
 import com.jb2dev.cv.domain.skills.model.TechnicalSkill;
@@ -23,24 +24,25 @@ public class JsonSkillsQueryAdapter implements SkillsRepository {
   private final ClasspathJsonReader reader;
 
   @Override
-  public List<LanguageSkill> findAllLanguages() {
-    return reader.read("data/skills_languages.json", LANG_TYPE);
+  public List<LanguageSkill> findAllLanguages(Language language) {
+    String path = language == Language.EN_EN ? "data/en/skills_languages.json" : "data/es/skills_languages.json";
+    return reader.read(path, LANG_TYPE);
   }
 
   @Override
-  public Optional<LanguageSkill> findLanguageById(int id) {
-    return findAllLanguages().stream().filter(s -> s.id() == id).findFirst();
+  public Optional<LanguageSkill> findLanguageById(int id, Language language) {
+    return findAllLanguages(language).stream().filter(s -> s.id() == id).findFirst();
   }
 
   @Override
   public List<TechnicalSkill> findAllTechnicalSkills() {
-    return reader.read("data/skills_technical.json", TECH_TYPE);
+    String path = "data/commons/skills_technical.json";
+    return reader.read(path, TECH_TYPE);
   }
 
   @Override
   public List<TechnicalSkill> findTechnicalSkillByCategory(String category) {
       String needle = category.toLowerCase();
-
       return findAllTechnicalSkills().stream()
               .filter(skill -> skill.category().getLabel().toLowerCase().equals(needle)
                       || skill.category().name().toLowerCase().equals(needle))
@@ -50,19 +52,19 @@ public class JsonSkillsQueryAdapter implements SkillsRepository {
   @Override
   public List<TechnicalSkill> findTechnicalSkillByName(String name) {
       String needle = name.toLowerCase();
-
       return findAllTechnicalSkills().stream()
               .filter(skill -> skill.name().toLowerCase().contains(needle))
               .toList();
   }
 
   @Override
-  public List<SoftSkill> findAllSoftSkills() {
-    return reader.read("data/skills_soft.json", SOFT_TYPE);
+  public List<SoftSkill> findAllSoftSkills(Language language) {
+    String path = language == Language.EN_EN ? "data/en/skills_soft.json" : "data/es/skills_soft.json";
+    return reader.read(path, SOFT_TYPE);
   }
 
   @Override
-  public Optional<SoftSkill> findSoftSkillById(int id) {
-    return findAllSoftSkills().stream().filter(s -> s.id() == id).findFirst();
+  public Optional<SoftSkill> findSoftSkillById(int id, Language language) {
+    return findAllSoftSkills(language).stream().filter(s -> s.id() == id).findFirst();
   }
 }

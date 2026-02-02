@@ -2,6 +2,7 @@ package com.jb2dev.cv.infrastructure.rest.controllers.skills;
 
 import com.jb2dev.cv.application.skills.*;
 import com.jb2dev.cv.application.skills.query.TechnicalSkillSearchCriteria;
+import com.jb2dev.cv.domain.Language;
 import com.jb2dev.cv.infrastructure.rest.dto.skills.LanguageSkillDetailResponse;
 import com.jb2dev.cv.infrastructure.rest.dto.skills.LanguageSkillResponse;
 import com.jb2dev.cv.infrastructure.rest.dto.skills.SoftSkillResponse;
@@ -9,6 +10,7 @@ import com.jb2dev.cv.infrastructure.rest.dto.skills.TechnicalSkillDetailResponse
 import com.jb2dev.cv.infrastructure.rest.mappers.skills.SkillsRestMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -38,10 +40,11 @@ public class SkillsController {
     @Operation(
             summary = "List language skills",
             description = """
-            Returns a list of all available language skills.
-            Each language skill represents a spoken language and
-            includes basic proficiency information.
+            Returns a list of all available language skills. Each language skill represents a spoken language and includes basic proficiency information. The response is internationalized according to the Accept-Language header (es_ES or en_EN).
             """,
+            parameters = {
+                @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Response language: es_ES for Spanish, en_EN for English", example = "es_ES", required = false)
+            },
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -51,14 +54,8 @@ public class SkillsController {
                                     schema = @Schema(implementation = LanguageSkillResponse.class),
                                     examples = @ExampleObject(value = """
                                     [
-                                      {
-                                        "id": 2354,
-                                        "language": "Spanish"
-                                      },
-                                      {
-                                        "id": 8161,
-                                        "language": "English"
-                                      }
+                                      { "id": 2354, "language": "Spanish" },
+                                      { "id": 8161, "language": "English" }
                                     ]
                                     """)
                             )
@@ -68,27 +65,25 @@ public class SkillsController {
                             description = "Internal server error",
                             content = @Content(
                                     mediaType = "application/json",
-                                    examples = @ExampleObject(value = """
-                                    {
-                                      "error": "Internal server error."
-                                    }
-                                    """)
+                                    examples = @ExampleObject(value = "{\n  \"error\": \"Internal server error.\"\n}")
                             )
                     )
             }
     )
     @GetMapping("/languages")
-    public ResponseEntity<List<LanguageSkillResponse>> getLanguageSkills() {
-        return ResponseEntity.ok(mapper.toLanguageResponseList(languagesUseCase.execute()));
+    public ResponseEntity<List<LanguageSkillResponse>> getLanguageSkills(@RequestHeader(value = "Accept-Language", defaultValue = "es_ES") String locale) {
+        Language language = Language.fromCode(locale);
+        return ResponseEntity.ok(mapper.toLanguageResponseList(languagesUseCase.execute(language)));
     }
 
     @Operation(
             summary = "Get a language skill by id",
             description = """
-            Returns the detailed information of a specific language skill
-            identified by its numeric id.
-            If the language skill does not exist, a 404 response is returned.
+            Returns the detailed information of a specific language skill identified by its numeric id. The response is internationalized according to the Accept-Language header (es_ES or en_EN). If the language skill does not exist, a 404 response is returned.
             """,
+            parameters = {
+                @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Response language: es_ES for Spanish, en_EN for English", example = "es_ES", required = false)
+            },
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -97,15 +92,7 @@ public class SkillsController {
                                     mediaType = "application/json",
                                     schema = @Schema(implementation = LanguageSkillDetailResponse.class),
                                     examples = @ExampleObject(value = """
-                                    {
-                                        "id": 2354,
-                                        "language": "Spanish",
-                                        "listening": "Native",
-                                        "reading": "Native",
-                                        "spoken_production": "Native",
-                                        "spoken_interaction": "Native",
-                                        "writing": "Native"
-                                    }
+                                    { "id": 2354, "language": "Spanish", "listening": "Native", "reading": "Native", "spoken_production": "Native", "spoken_interaction": "Native", "writing": "Native" }
                                     """)
                             )
                     ),
@@ -114,11 +101,7 @@ public class SkillsController {
                             description = "Language skill not found",
                             content = @Content(
                                     mediaType = "application/json",
-                                    examples = @ExampleObject(value = """
-                                    {
-                                      "error": "Language skill not found."
-                                    }
-                                    """)
+                                    examples = @ExampleObject(value = "{\n  \"error\": \"Language skill not found.\"\n}")
                             )
                     ),
                     @ApiResponse(
@@ -126,24 +109,19 @@ public class SkillsController {
                             description = "Internal server error",
                             content = @Content(
                                     mediaType = "application/json",
-                                    examples = @ExampleObject(value = """
-                                    {
-                                      "error": "Internal server error."
-                                    }
-                                    """)
+                                    examples = @ExampleObject(value = "{\n  \"error\": \"Internal server error.\"\n}")
                             )
                     )
             }
     )
     @GetMapping("/languages/{id}")
     public ResponseEntity<LanguageSkillDetailResponse> getLanguageSkillById(
-            @Parameter(
-                    description = "4-digit numeric id of the education entry",
-                    example = "1234"
-            )
-            @PathVariable("id") int id
+            @Parameter(description = "4-digit numeric id of the language skill", example = "1234")
+            @PathVariable("id") int id,
+            @RequestHeader(value = "Accept-Language", defaultValue = "es_ES") String locale
     ) {
-        return languageByIdUseCase.execute(id)
+        Language language = Language.fromCode(locale);
+        return languageByIdUseCase.execute(id, language)
                 .map(mapper::toDetailResponse)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -152,12 +130,12 @@ public class SkillsController {
     @Operation(
             summary = "List technical skills",
             description = """
-                Returns a list of technical skills. 
-                You can filter the results by name or category query parameters.
-                - If name is provided, returns skills matching that name.
-                - If category is provided, returns skills in that category.
-                - If neither is provided, returns all technical skills.
+                Returns a list of technical skills. You can filter the results by name or category query parameters. - If name is provided, returns skills matching that name. - If category is provided, returns skills in that category. - If neither is provided, returns all technical skills. This information is common for all languages (not internationalized, Accept-Language is ignored).
                 """,
+            parameters = {
+                @Parameter(name = "name", description = "Filter skills by name (partial match)", example = "Java"),
+                @Parameter(name = "category", description = "Filter skills by category (exact match)", example = "Language")
+            },
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -178,11 +156,7 @@ public class SkillsController {
                             description = "No technical skills found for the given filter",
                             content = @Content(
                                     mediaType = "application/json",
-                                    examples = @ExampleObject(value = """
-                                        {
-                                          "error": "No technical skills found for the provided name or category."
-                                        }
-                                        """)
+                                    examples = @ExampleObject(value = "{\n  \"error\": \"No technical skills found for the provided name or category.\"\n}")
                             )
                     ),
                     @ApiResponse(
@@ -190,40 +164,21 @@ public class SkillsController {
                             description = "Internal server error",
                             content = @Content(
                                     mediaType = "application/json",
-                                    examples = @ExampleObject(value = """
-                                        {
-                                          "error": "Internal server error."
-                                        }
-                                        """)
+                                    examples = @ExampleObject(value = "{\n  \"error\": \"Internal server error.\"\n}")
                             )
-                    )
-            },
-            parameters = {
-                    @Parameter(
-                            name = "name",
-                            description = "Filter skills by name (partial match)",
-                            example = "Java"
-                    ),
-                    @Parameter(
-                            name = "category",
-                            description = "Filter skills by category (exact match)",
-                            example = "Language"
                     )
             }
     )
-
     @GetMapping("/technical")
     public ResponseEntity<List<TechnicalSkillDetailResponse>> getTechnicalSkills(
             @RequestParam(name = "name", required = false) String name,
             @RequestParam(name = "category", required = false) String category
     ) {
         TechnicalSkillSearchCriteria criteria = new TechnicalSkillSearchCriteria(name, category);
-
         List<TechnicalSkillDetailResponse> result =
                 mapper.toTechnicalDetailResponseList(
                         searchTechnicalSkillsUseCase.execute(criteria)
                 );
-
         return result.isEmpty()
                 ? ResponseEntity.status(404).body(result)
                 : ResponseEntity.ok(result);
@@ -232,10 +187,11 @@ public class SkillsController {
     @Operation(
             summary = "List soft skills",
             description = """
-            Returns a list of all available soft skills.
-            Soft skills represent personal and interpersonal abilities
-            such as communication, teamwork, or problem-solving.
+            Returns a list of all available soft skills. Soft skills represent personal and interpersonal abilities such as communication, teamwork, or problem-solving. The response is internationalized according to the Accept-Language header (es_ES or en_EN).
             """,
+            parameters = {
+                @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Response language: es_ES for Spanish, en_EN for English", example = "es_ES", required = false)
+            },
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -256,26 +212,25 @@ public class SkillsController {
                             description = "Internal server error",
                             content = @Content(
                                     mediaType = "application/json",
-                                    examples = @ExampleObject(value = """
-                                    {
-                                      "error": "Internal server error."
-                                    }
-                                    """)
+                                    examples = @ExampleObject(value = "{\n  \"error\": \"Internal server error.\"\n}")
                             )
                     )
             }
     )
     @GetMapping("/soft")
-    public ResponseEntity<List<SoftSkillResponse>> getSoftSkills() {
-        return ResponseEntity.ok(mapper.toSoftResponseList(softUseCase.execute()));
+    public ResponseEntity<List<SoftSkillResponse>> getSoftSkills(@RequestHeader(value = "Accept-Language", defaultValue = "es_ES") String locale) {
+        Language language = Language.fromCode(locale);
+        return ResponseEntity.ok(mapper.toSoftResponseList(softUseCase.execute(language)));
     }
 
     @Operation(
             summary = "Get a soft skill by id",
             description = """
-            Returns the details of a specific soft skill identified by its id.
-            If no soft skill exists with the provided id, a 404 response is returned.
+            Returns the details of a specific soft skill identified by its id. The response is internationalized according to the Accept-Language header (es_ES or en_EN). If no soft skill exists with the provided id, a 404 response is returned.
             """,
+            parameters = {
+                @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Response language: es_ES for Spanish, en_EN for English", example = "es_ES", required = false)
+            },
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -283,9 +238,7 @@ public class SkillsController {
                             content = @Content(
                                     mediaType = "application/json",
                                     schema = @Schema(implementation = SoftSkillResponse.class),
-                                    examples = @ExampleObject(value = """
-                                    { "id": 1001, "name": "Communication" }
-                                    """)
+                                    examples = @ExampleObject(value = "{ \"id\": 1001, \"name\": \"Communication\" }")
                             )
                     ),
                     @ApiResponse(
@@ -293,11 +246,7 @@ public class SkillsController {
                             description = "Soft skill not found",
                             content = @Content(
                                     mediaType = "application/json",
-                                    examples = @ExampleObject(value = """
-                                    {
-                                      "error": "Soft skill not found."
-                                    }
-                                    """)
+                                    examples = @ExampleObject(value = "{\n  \"error\": \"Soft skill not found.\"\n}")
                             )
                     ),
                     @ApiResponse(
@@ -305,24 +254,19 @@ public class SkillsController {
                             description = "Internal server error",
                             content = @Content(
                                     mediaType = "application/json",
-                                    examples = @ExampleObject(value = """
-                                    {
-                                      "error": "Internal server error."
-                                    }
-                                    """)
+                                    examples = @ExampleObject(value = "{\n  \"error\": \"Internal server error.\"\n}")
                             )
                     )
             }
     )
     @GetMapping("/soft/{id}")
     public ResponseEntity<SoftSkillResponse> getSoftSkillById(
-            @Parameter(
-                    description = "4-digit numeric id of the soft skill",
-                    example = "1234"
-            )
-            @PathVariable("id") int id
+            @Parameter(description = "4-digit numeric id of the soft skill", example = "1234")
+            @PathVariable("id") int id,
+            @RequestHeader(value = "Accept-Language", defaultValue = "es_ES") String locale
     ) {
-        return softByIdUseCase.execute(id)
+        Language language = Language.fromCode(locale);
+        return softByIdUseCase.execute(id, language)
                 .map(mapper::toResponse)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
