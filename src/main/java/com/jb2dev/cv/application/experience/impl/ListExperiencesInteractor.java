@@ -1,6 +1,7 @@
 package com.jb2dev.cv.application.experience.impl;
 
 import com.jb2dev.cv.application.experience.ListExperiencesUseCase;
+import com.jb2dev.cv.domain.Language;
 import com.jb2dev.cv.domain.experience.model.ExperienceItem;
 import com.jb2dev.cv.domain.experience.ports.ExperienceRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,7 @@ public class ListExperiencesInteractor implements ListExperiencesUseCase {
   private final ExperienceRepository experienceRepository;
 
   @Override
-  public List<ExperienceItem> execute() {
-    return experienceRepository.findAllExperiences();
+  public List<ExperienceItem> execute(Language language) {
+    return experienceRepository.findAllExperiences(language);
   }
 }

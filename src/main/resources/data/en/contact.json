@@ -1,9 +1,8 @@
 {
-  "address": "Carrer de l'Abat Escarré nº30 2o - 1a, 08830 Sant Boi de Llobregat, Spain",
+  "address": "30 Abat Escarré St, 2nd floor, Apt 1A, 08830 Sant Boi de Llobregat, Spain",
   "email": "javier.alca.2000@gmail.com",
-  "mobilePhone": "(+34) 610817878",
-  "landlinePhone": "(+34) 936307739",
-  "websiteUrl": "https://jac-portfolio.netlify.app/",
-  "linkedinUrl": "https://www.linkedin.com/in/jb2dev/",
-  "githubUrl": "https://github.com/JB2DEV"
+  "mobile_phone": "(+34) 610817878",
+  "landline_phone": "(+34) 936307739",
+  "linkedin_url": "https://www.linkedin.com/in/jb2dev/",
+  "github_url": "https://github.com/JB2DEV"
 }

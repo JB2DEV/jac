@@ -1,6 +1,7 @@
 package com.jb2dev.cv.infrastructure.json.education;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.jb2dev.cv.domain.Language;
 import com.jb2dev.cv.domain.education.model.EducationItem;
 import com.jb2dev.cv.domain.education.ports.EducationRepository;
 import com.jb2dev.cv.infrastructure.json.ClasspathJsonReader;
@@ -19,15 +20,15 @@ public class JsonEducationQueryAdapter implements EducationRepository {
   private final ClasspathJsonReader reader;
 
   @Override
-  public List<EducationItem> findAllEducations() {
-    var items = reader.read("data/education.json", TYPE);
-    return items.stream()
-        .sorted(Comparator.comparing(EducationItem::startDate).reversed())
-        .toList();
+  public List<EducationItem> findAllEducations(Language language) {
+    String path = language == Language.EN_EN ? "data/en/education.json" : "data/es/education.json";
+    return reader.read(path, TYPE);
   }
 
   @Override
-  public Optional<EducationItem> findEducationById(int id) {
-    return findAllEducations().stream().filter(i -> i.id() == id).findFirst();
+  public Optional<EducationItem> findEducationById(int id, Language language) {
+    return findAllEducations(language).stream()
+        .filter(i -> i.id() == id)
+        .findFirst();
   }
 }

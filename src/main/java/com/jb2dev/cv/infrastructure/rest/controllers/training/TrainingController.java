@@ -2,11 +2,13 @@ package com.jb2dev.cv.infrastructure.rest.controllers.training;
 
 import com.jb2dev.cv.application.training.GetTrainingUseCase;
 import com.jb2dev.cv.application.training.ListTrainingsUseCase;
+import com.jb2dev.cv.domain.Language;
 import com.jb2dev.cv.infrastructure.rest.dto.training.TrainingDetailResponse;
 import com.jb2dev.cv.infrastructure.rest.dto.training.TrainingResponse;
 import com.jb2dev.cv.infrastructure.rest.mappers.training.TrainingRestMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -16,7 +18,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -35,6 +39,9 @@ public class TrainingController {
             summary = "List all training entries",
             description = "Returns a list of non-formal training entries including courses, workshops, and learning paths. " +
                     "The list is sorted by issuance date in descending order.",
+            parameters = {
+                @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Idioma de la respuesta: es_ES para español, en_EN para inglés", example = "es_ES", required = false)
+            },
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -71,14 +78,18 @@ public class TrainingController {
             }
     )
     @GetMapping
-    public ResponseEntity<List<TrainingResponse>> getTrainings() {
-        return ResponseEntity.ok(mapper.toResponseList(listUseCase.execute()));
+    public ResponseEntity<List<TrainingResponse>> getTrainings(@RequestHeader(value = "Accept-Language", defaultValue = "es_ES") String locale) {
+        Language language = Language.fromCode(locale);
+        return ResponseEntity.ok(mapper.toResponseList(listUseCase.execute(language)));
     }
 
     @Operation(
             summary = "Get a training entry by credential ID",
             description = "Retrieves detailed information of a training entry given its unique credential ID. " +
                     "The credential ID is the identifier of the training.",
+            parameters = {
+                @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Idioma de la respuesta: es_ES para español, en_EN para inglés", example = "es_ES", required = false)
+            },
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -132,9 +143,11 @@ public class TrainingController {
                     required = true,
                     example = "EUJB"
             )
-            @PathVariable("credentialId") String credentialId
+            @PathVariable("credentialId") String credentialId,
+            @RequestHeader(value = "Accept-Language", defaultValue = "es_ES") String locale
     ) {
-        return getByIdUseCase.execute(credentialId)
+        Language language = Language.fromCode(locale);
+        return getByIdUseCase.execute(credentialId, language)
                 .map(mapper::toResponse)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());

@@ -1,6 +1,7 @@
 package com.jb2dev.cv.infrastructure.json.experience;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.jb2dev.cv.domain.Language;
 import com.jb2dev.cv.domain.experience.model.ExperienceItem;
 import com.jb2dev.cv.domain.experience.ports.ExperienceRepository;
 import com.jb2dev.cv.infrastructure.json.ClasspathJsonReader;
@@ -19,8 +20,9 @@ public class JsonExperienceQueryAdapter implements ExperienceRepository {
     private final ClasspathJsonReader reader;
 
     @Override
-    public List<ExperienceItem> findAllExperiences() {
-        var items = reader.read("data/experience.json", TYPE);
+    public List<ExperienceItem> findAllExperiences(Language language) {
+        String path = language == Language.EN_EN ? "data/en/experience.json" : "data/es/experience.json";
+        var items = reader.read(path, TYPE);
         return items.stream()
                 .sorted(Comparator.comparing(
                         ExperienceItem::startDate,
@@ -30,8 +32,8 @@ public class JsonExperienceQueryAdapter implements ExperienceRepository {
     }
 
     @Override
-    public Optional<ExperienceItem> findExperienceById(int id) {
-        return findAllExperiences().stream()
+    public Optional<ExperienceItem> findExperienceById(int id, Language language) {
+        return findAllExperiences(language).stream()
                 .filter(i -> i.id() == id)
                 .findFirst();
     }

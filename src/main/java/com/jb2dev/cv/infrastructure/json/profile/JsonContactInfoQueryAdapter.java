@@ -1,5 +1,6 @@
 package com.jb2dev.cv.infrastructure.json.profile;
 
+import com.jb2dev.cv.domain.Language;
 import com.jb2dev.cv.domain.profile.model.ContactInfo;
 import com.jb2dev.cv.domain.profile.ports.ContactInfoRepository;
 import com.jb2dev.cv.infrastructure.json.ClasspathJsonReader;
@@ -13,7 +14,8 @@ public class JsonContactInfoQueryAdapter implements ContactInfoRepository {
   private final ClasspathJsonReader reader;
 
   @Override
-  public ContactInfo getContactInfo() {
-    return reader.read("data/contact.json", ContactInfo.class);
+  public ContactInfo getContactInfo(Language language) {
+    String path = language == Language.EN_EN ? "data/en/contact.json" : "data/es/contact.json";
+    return reader.read(path, ContactInfo.class);
   }
 }

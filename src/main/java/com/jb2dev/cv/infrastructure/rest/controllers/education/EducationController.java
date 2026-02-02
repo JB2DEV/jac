@@ -2,10 +2,12 @@ package com.jb2dev.cv.infrastructure.rest.controllers.education;
 
 import com.jb2dev.cv.application.education.GetEducationUseCase;
 import com.jb2dev.cv.application.education.ListEducationsUseCase;
+import com.jb2dev.cv.domain.Language;
 import com.jb2dev.cv.infrastructure.rest.dto.education.EducationResponse;
 import com.jb2dev.cv.infrastructure.rest.mappers.education.EducationRestMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,6 +40,9 @@ public class EducationController {
                     Each entry represents an academic experience such as
                     degrees, postgraduate studies, or other formal education.
                     """,
+            parameters = {
+                @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Idioma de la respuesta: es_ES para español, en_EN para inglés", example = "es_ES", required = false)
+            },
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -83,8 +89,9 @@ public class EducationController {
             }
     )
     @GetMapping
-    public ResponseEntity<List<EducationResponse>> getEducations() {
-        return ResponseEntity.ok(mapper.toResponseList(listUseCase.execute()));
+    public ResponseEntity<List<EducationResponse>> getEducations(@RequestHeader(value = "Accept-Language", defaultValue = "es_ES") String locale) {
+        Language language = Language.fromCode(locale);
+        return ResponseEntity.ok(mapper.toResponseList(listUseCase.execute(language)));
     }
 
     @Operation(
@@ -94,6 +101,9 @@ public class EducationController {
                     identified by its numeric id.
                     If the education entry does not exist, a 404 response is returned.
                     """,
+            parameters = {
+                @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Idioma de la respuesta: es_ES para español, en_EN para inglés", example = "es_ES", required = false)
+            },
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -142,13 +152,12 @@ public class EducationController {
     )
     @GetMapping("/{id}")
     public ResponseEntity<EducationResponse> getEducationById(
-            @Parameter(
-                    description = "4-digit numeric id of the education entry",
-                    example = "1234"
-            )
-            @PathVariable int id
+            @Parameter(description = "4-digit numeric id of the education entry", example = "1234")
+            @PathVariable("id") int id,
+            @RequestHeader(value = "Accept-Language", defaultValue = "es_ES") String locale
     ) {
-        return getByIdUseCase.execute(id)
+        Language language = Language.fromCode(locale);
+        return getByIdUseCase.execute(id, language)
                 .map(mapper::toResponse)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
