@@ -3,6 +3,7 @@ package com.jb2dev.cv.application.education.impl;
 import com.jb2dev.cv.domain.Language;
 import com.jb2dev.cv.domain.education.model.EducationItem;
 import com.jb2dev.cv.domain.education.ports.EducationRepository;
+import com.jb2dev.cv.domain.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -42,28 +44,29 @@ class GetEducationInteractorTest {
         when(educationRepository.findEducationById(id, language)).thenReturn(Optional.of(expectedEducation));
 
         // When
-        Optional<EducationItem> result = interactor.execute(id, language);
+        EducationItem result = interactor.execute(id, language);
 
         // Then
-        assertThat(result).isPresent();
-        assertThat(result.get()).isEqualTo(expectedEducation);
-        assertThat(result.get().title()).isEqualTo("Bachelor of Computer Science");
-        assertThat(result.get().institution()).isEqualTo("State University");
+        assertThat(result).isNotNull();
+        assertThat(result).isEqualTo(expectedEducation);
+        assertThat(result.title()).isEqualTo("Bachelor of Computer Science");
+        assertThat(result.institution()).isEqualTo("State University");
         verify(educationRepository).findEducationById(id, language);
     }
 
     @Test
-    void shouldReturnEmptyWhenEducationNotFound() {
+    void shouldThrowExceptionWhenEducationNotFound() {
         // Given
         int id = 999;
         Language language = Language.EN_EN;
         when(educationRepository.findEducationById(id, language)).thenReturn(Optional.empty());
 
-        // When
-        Optional<EducationItem> result = interactor.execute(id, language);
+        // When & Then
+        assertThatThrownBy(() -> interactor.execute(id, language))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessageContaining("Education")
+                .hasMessageContaining("999");
 
-        // Then
-        assertThat(result).isEmpty();
         verify(educationRepository).findEducationById(id, language);
     }
 
@@ -84,11 +87,11 @@ class GetEducationInteractorTest {
         when(educationRepository.findEducationById(id, language)).thenReturn(Optional.of(expectedEducation));
 
         // When
-        Optional<EducationItem> result = interactor.execute(id, language);
+        EducationItem result = interactor.execute(id, language);
 
         // Then
-        assertThat(result).isPresent();
-        assertThat(result.get().title()).isEqualTo("Grado en Ingeniería Informática");
+        assertThat(result).isNotNull();
+        assertThat(result.title()).isEqualTo("Grado en Ingeniería Informática");
         verify(educationRepository).findEducationById(id, language);
     }
 }

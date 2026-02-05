@@ -1,5 +1,7 @@
 package com.jb2dev.cv.domain;
 
+import com.jb2dev.cv.domain.exception.InvalidLanguageException;
+
 public enum Language {
     ES_ES("es_ES"),
     EN_EN("en_EN");
@@ -20,6 +22,6 @@ public enum Language {
                 return lang;
             }
         }
-        throw new IllegalArgumentException("Invalid language code: " + code);
+        throw new InvalidLanguageException(code);
     }
 }

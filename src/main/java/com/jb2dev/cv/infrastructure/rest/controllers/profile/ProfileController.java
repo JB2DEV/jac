@@ -19,7 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "Profile", description = "Core personal and contact profile information.")
@@ -40,7 +39,7 @@ public class ProfileController {
             full name, date of birth, nationality, and gender.
             """,
             parameters = {
-                @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Idioma de la respuesta: es_ES para español, en_EN para inglés", example = "es_ES", required = false)
+                @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Response language: es_ES for Spanish, en_EN for English", example = "es_ES", required = false)
             },
             responses = {
                     @ApiResponse(
@@ -51,22 +50,42 @@ public class ProfileController {
                                     schema = @Schema(implementation = PersonalInfoResponse.class),
                                     examples = @ExampleObject(value = """
                                     {
-                                      "full_name": "Javier Álvarez Cáceres",
-                                      "birth_date": "1990-05-21",
-                                      "nationality": "Spanish",
+                                      "full_name": "John Doe",
+                                      "birth_date": "1990-01-15",
+                                      "nationality": "American",
                                       "gender": "Male"
                                     }
                                     """)
                             )
                     ),
                     @ApiResponse(
-                            responseCode = "500",
-                            description = "Internal server error",
+                            responseCode = "400",
+                            description = "Bad Request - Invalid language code",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(value = """
                                     {
-                                      "error": "Internal server error."
+                                      "timestamp": "2026-02-05T12:30:00",
+                                      "status": 400,
+                                      "error": "Bad Request",
+                                      "message": "Invalid language code: 'invalid'. Supported codes are: es_ES, en_EN",
+                                      "path": "/api/v1/personal"
+                                    }
+                                    """)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal Server Error",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(value = """
+                                    {
+                                      "timestamp": "2026-02-05T12:30:00",
+                                      "status": 500,
+                                      "error": "Internal Server Error",
+                                      "message": "An unexpected error occurred while processing your request",
+                                      "path": "/api/v1/personal"
                                     }
                                     """)
                             )
@@ -87,7 +106,7 @@ public class ProfileController {
             and relevant online profiles such as LinkedIn or GitHub.
             """,
             parameters = {
-                @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Idioma de la respuesta: es_ES para español, en_EN para inglés", example = "es_ES", required = false)
+                @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Response language: es_ES for Spanish, en_EN for English", example = "es_ES", required = false)
             },
             responses = {
                     @ApiResponse(
@@ -98,25 +117,44 @@ public class ProfileController {
                                     schema = @Schema(implementation = ContactInfoResponse.class),
                                     examples = @ExampleObject(value = """
                                     {
-                                      "address": "Madrid, Spain",
-                                      "email": "javier.alvarez@example.com",
-                                      "mobile_phone": "+34 600 123 456",
-                                      "landline_phone": "+34 91 123 45 67",
-                                      "website_url": "https://jb2dev.com",
-                                      "linkedin_url": "https://linkedin.com/in/jb2dev",
-                                      "github_url": "https://github.com/jb2dev"
+                                      "address": "New York, USA",
+                                      "email": "john.doe@example.com",
+                                      "mobile_phone": "+1 555 123 4567",
+                                      "website_url": "https://johndoe.dev",
+                                      "linkedin_url": "https://linkedin.com/in/johndoe",
+                                      "github_url": "https://github.com/johndoe"
+                                    }
+                                    """)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Bad Request - Invalid language code",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(value = """
+                                    {
+                                      "timestamp": "2026-02-05T12:30:00",
+                                      "status": 400,
+                                      "error": "Bad Request",
+                                      "message": "Invalid language code: 'pt_BR'. Supported codes are: es_ES, en_EN",
+                                      "path": "/api/v1/contact"
                                     }
                                     """)
                             )
                     ),
                     @ApiResponse(
                             responseCode = "500",
-                            description = "Internal server error",
+                            description = "Internal Server Error",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(value = """
                                     {
-                                      "error": "Internal server error."
+                                      "timestamp": "2026-02-05T12:30:00",
+                                      "status": 500,
+                                      "error": "Internal Server Error",
+                                      "message": "An unexpected error occurred while processing your request",
+                                      "path": "/api/v1/contact"
                                     }
                                     """)
                             )

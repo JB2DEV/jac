@@ -13,7 +13,6 @@ class ContactInfoTest {
                 "123 Main St",
                 "john@example.com",
                 "+1234567890",
-                "+0987654321",
                 "https://linkedin.com/in/johndoe",
                 "https://github.com/johndoe"
         );
@@ -22,7 +21,6 @@ class ContactInfoTest {
         assertThat(info.address()).isEqualTo("123 Main St");
         assertThat(info.email()).isEqualTo("john@example.com");
         assertThat(info.mobilePhone()).isEqualTo("+1234567890");
-        assertThat(info.landlinePhone()).isEqualTo("+0987654321");
         assertThat(info.linkedinUrl()).isEqualTo("https://linkedin.com/in/johndoe");
         assertThat(info.githubUrl()).isEqualTo("https://github.com/johndoe");
     }
@@ -34,7 +32,6 @@ class ContactInfoTest {
                 "123 Main St",
                 "john@example.com",
                 "+1234567890",
-                "+0987654321",
                 "https://linkedin.com/in/johndoe",
                 "https://github.com/johndoe"
         );
@@ -42,7 +39,6 @@ class ContactInfoTest {
                 "123 Main St",
                 "john@example.com",
                 "+1234567890",
-                "+0987654321",
                 "https://linkedin.com/in/johndoe",
                 "https://github.com/johndoe"
         );
@@ -59,7 +55,6 @@ class ContactInfoTest {
                 "123 Main St",
                 "john@example.com",
                 "+1234567890",
-                "+0987654321",
                 "https://linkedin.com/in/johndoe",
                 "https://github.com/johndoe"
         );
@@ -67,7 +62,6 @@ class ContactInfoTest {
                 "456 Oak Ave",
                 "jane@example.com",
                 "+9876543210",
-                "+1234567890",
                 "https://linkedin.com/in/janesmith",
                 "https://github.com/janesmith"
         );
@@ -83,7 +77,6 @@ class ContactInfoTest {
                 "123 Main St",
                 "john@example.com",
                 "+1234567890",
-                "+0987654321",
                 "https://linkedin.com/in/johndoe",
                 "https://github.com/johndoe"
         );

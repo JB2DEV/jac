@@ -4,7 +4,6 @@ public record ContactInfo(
     String address,
     String email,
     String mobilePhone,
-    String landlinePhone,
     String linkedinUrl,
     String githubUrl
 ) {}

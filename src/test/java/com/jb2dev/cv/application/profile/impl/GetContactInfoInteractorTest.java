@@ -30,7 +30,6 @@ class GetContactInfoInteractorTest {
                 "123 Main St, Boston, MA",
                 "john.doe@example.com",
                 "+1-555-123-4567",
-                "+1-555-987-6543",
                 "https://linkedin.com/in/johndoe",
                 "https://github.com/johndoe"
         );
@@ -54,7 +53,6 @@ class GetContactInfoInteractorTest {
                 "Calle Principal 123, Madrid, España",
                 "juan.perez@ejemplo.com",
                 "+34-666-123-456",
-                "+34-91-123-4567",
                 "https://linkedin.com/in/juanperez",
                 "https://github.com/juanperez"
         );

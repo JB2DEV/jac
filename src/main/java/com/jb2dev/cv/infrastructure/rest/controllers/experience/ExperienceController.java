@@ -3,6 +3,7 @@ package com.jb2dev.cv.infrastructure.rest.controllers.experience;
 import com.jb2dev.cv.application.experience.GetExperienceUseCase;
 import com.jb2dev.cv.application.experience.ListExperiencesUseCase;
 import com.jb2dev.cv.domain.Language;
+import com.jb2dev.cv.domain.experience.model.ExperienceItem;
 import com.jb2dev.cv.infrastructure.rest.dto.experience.ExperienceDetailResponse;
 import com.jb2dev.cv.infrastructure.rest.dto.experience.ExperienceResponse;
 import com.jb2dev.cv.infrastructure.rest.mappers.experience.ExperienceRestMapper;
@@ -36,13 +37,9 @@ public class ExperienceController {
 
     @Operation(
             summary = "List experience entries",
-            description = """
-                    Returns a list of professional experience entries.
-                    Each entry contains a short summary of a role or position.
-                    Results are ordered by start date in descending order.
-                    """,
+            description = "Returns a list of professional experience entries. Each entry contains a short summary of a role or position.Results are ordered by start date in descending order.",
             parameters = {
-                @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Idioma de la respuesta: es_ES para español, en_EN para inglés", example = "es_ES", required = false)
+                @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Response language: es_ES for Spanish, en_EN for English", example = "es_ES", required = false)
             },
             responses = {
                     @ApiResponse(
@@ -68,13 +65,33 @@ public class ExperienceController {
                             )
                     ),
                     @ApiResponse(
-                            responseCode = "500",
-                            description = "Internal server error",
+                            responseCode = "400",
+                            description = "Bad Request - Invalid language code",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(value = """
                                             {
-                                              "error": "Internal server error."
+                                              "timestamp": "2026-02-05T12:30:00",
+                                              "status": 400,
+                                              "error": "Bad Request",
+                                              "message": "Invalid language code: 'de_DE'. Supported codes are: es_ES, en_EN",
+                                              "path": "/api/v1/experience"
+                                            }
+                                            """)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal Server Error",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(value = """
+                                            {
+                                              "timestamp": "2026-02-05T12:30:00",
+                                              "status": 500,
+                                              "error": "Internal Server Error",
+                                              "message": "An unexpected error occurred while processing your request",
+                                              "path": "/api/v1/experience"
                                             }
                                             """)
                             )
@@ -92,10 +109,9 @@ public class ExperienceController {
             description = """
                     Returns the detailed information of a specific experience entry
                     identified by its numeric id.
-                    If the experience entry does not exist, a 404 response is returned.
                     """,
             parameters = {
-                @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Idioma de la respuesta: es_ES para español, en_EN para inglés", example = "es_ES", required = false)
+                @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Response language: es_ES for Spanish, en_EN for English", example = "es_ES", required = false)
             },
             responses = {
                     @ApiResponse(
@@ -120,25 +136,49 @@ public class ExperienceController {
                             )
                     ),
                     @ApiResponse(
-                            responseCode = "404",
-                            description = "Experience entry not found",
+                            responseCode = "400",
+                            description = "Bad Request - Invalid language code",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(value = """
                                             {
-                                              "error": "Experience entry not found."
+                                              "timestamp": "2026-02-05T12:30:00",
+                                              "status": 400,
+                                              "error": "Bad Request",
+                                              "message": "Invalid language code: 'de_DE'. Supported codes are: es_ES, en_EN",
+                                              "path": "/api/v1/experience/6541"
+                                            }
+                                            """)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Not Found - Experience entry does not exist",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(value = """
+                                            {
+                                              "timestamp": "2026-02-05T12:30:00",
+                                              "status": 404,
+                                              "error": "Not Found",
+                                              "message": "Experience with id '9999' not found",
+                                              "path": "/api/v1/experience/9999"
                                             }
                                             """)
                             )
                     ),
                     @ApiResponse(
                             responseCode = "500",
-                            description = "Internal server error",
+                            description = "Internal Server Error",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(value = """
                                             {
-                                              "error": "Internal server error."
+                                              "timestamp": "2026-02-05T12:30:00",
+                                              "status": 500,
+                                              "error": "Internal Server Error",
+                                              "message": "An unexpected error occurred while processing your request",
+                                              "path": "/api/v1/experience/6541"
                                             }
                                             """)
                             )
@@ -152,9 +192,7 @@ public class ExperienceController {
             @RequestHeader(value = "Accept-Language", defaultValue = "es_ES") String locale
     ) {
         Language language = Language.fromCode(locale);
-        return getByIdUseCase.execute(id, language)
-                .map(mapper::toDetailResponse)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        ExperienceItem experience = getByIdUseCase.execute(id, language);
+        return ResponseEntity.ok(mapper.toDetailResponse(experience));
     }
 }

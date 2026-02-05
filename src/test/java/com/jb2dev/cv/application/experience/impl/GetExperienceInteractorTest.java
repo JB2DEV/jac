@@ -3,6 +3,7 @@ package com.jb2dev.cv.application.experience.impl;
 import com.jb2dev.cv.domain.Language;
 import com.jb2dev.cv.domain.experience.model.ExperienceItem;
 import com.jb2dev.cv.domain.experience.ports.ExperienceRepository;
+import com.jb2dev.cv.domain.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -44,28 +46,29 @@ class GetExperienceInteractorTest {
         when(experienceRepository.findExperienceById(id, language)).thenReturn(Optional.of(expectedExperience));
 
         // When
-        Optional<ExperienceItem> result = interactor.execute(id, language);
+        ExperienceItem result = interactor.execute(id, language);
 
         // Then
-        assertThat(result).isPresent();
-        assertThat(result.get()).isEqualTo(expectedExperience);
-        assertThat(result.get().role()).isEqualTo("Senior Java Developer");
-        assertThat(result.get().company()).isEqualTo("Tech Corp");
+        assertThat(result).isNotNull();
+        assertThat(result).isEqualTo(expectedExperience);
+        assertThat(result.role()).isEqualTo("Senior Java Developer");
+        assertThat(result.company()).isEqualTo("Tech Corp");
         verify(experienceRepository).findExperienceById(id, language);
     }
 
     @Test
-    void shouldReturnEmptyWhenExperienceNotFound() {
+    void shouldThrowExceptionWhenExperienceNotFound() {
         // Given
         int id = 999;
         Language language = Language.EN_EN;
         when(experienceRepository.findExperienceById(id, language)).thenReturn(Optional.empty());
 
-        // When
-        Optional<ExperienceItem> result = interactor.execute(id, language);
+        // When & Then
+        assertThatThrownBy(() -> interactor.execute(id, language))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessageContaining("Experience")
+                .hasMessageContaining("999");
 
-        // Then
-        assertThat(result).isEmpty();
         verify(experienceRepository).findExperienceById(id, language);
     }
 
@@ -88,11 +91,11 @@ class GetExperienceInteractorTest {
         when(experienceRepository.findExperienceById(id, language)).thenReturn(Optional.of(expectedExperience));
 
         // When
-        Optional<ExperienceItem> result = interactor.execute(id, language);
+        ExperienceItem result = interactor.execute(id, language);
 
         // Then
-        assertThat(result).isPresent();
-        assertThat(result.get().role()).isEqualTo("Desarrollador Java Senior");
+        assertThat(result).isNotNull();
+        assertThat(result.role()).isEqualTo("Desarrollador Java Senior");
         verify(experienceRepository).findExperienceById(id, language);
     }
 
@@ -115,12 +118,12 @@ class GetExperienceInteractorTest {
         when(experienceRepository.findExperienceById(id, language)).thenReturn(Optional.of(currentExperience));
 
         // When
-        Optional<ExperienceItem> result = interactor.execute(id, language);
+        ExperienceItem result = interactor.execute(id, language);
 
         // Then
-        assertThat(result).isPresent();
-        assertThat(result.get().current()).isTrue();
-        assertThat(result.get().endDate()).isNull();
+        assertThat(result).isNotNull();
+        assertThat(result.current()).isTrue();
+        assertThat(result.endDate()).isNull();
         verify(experienceRepository).findExperienceById(id, language);
     }
 }

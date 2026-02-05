@@ -3,6 +3,7 @@ package com.jb2dev.cv.infrastructure.rest.controllers.education;
 import com.jb2dev.cv.application.education.GetEducationUseCase;
 import com.jb2dev.cv.application.education.ListEducationsUseCase;
 import com.jb2dev.cv.domain.Language;
+import com.jb2dev.cv.domain.education.model.EducationItem;
 import com.jb2dev.cv.infrastructure.rest.dto.education.EducationResponse;
 import com.jb2dev.cv.infrastructure.rest.mappers.education.EducationRestMapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,13 +36,9 @@ public class EducationController {
 
     @Operation(
             summary = "List formal education entries",
-            description = """
-                    Returns a list of formal education records.
-                    Each entry represents an academic experience such as
-                    degrees, postgraduate studies, or other formal education.
-                    """,
+            description = "Returns a list of formal education records. Each entry represents an academic experience such as degrees, postgraduate studies, or other formal education.",
             parameters = {
-                @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Idioma de la respuesta: es_ES para español, en_EN para inglés", example = "es_ES", required = false)
+                @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Response language: es_ES for Spanish, en_EN for English", example = "es_ES", required = false)
             },
             responses = {
                     @ApiResponse(
@@ -75,13 +72,33 @@ public class EducationController {
                             )
                     ),
                     @ApiResponse(
-                            responseCode = "500",
-                            description = "Internal server error",
+                            responseCode = "400",
+                            description = "Bad Request - Invalid language code",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(value = """
                                             {
-                                              "error": "Internal server error."
+                                              "timestamp": "2026-02-05T12:30:00",
+                                              "status": 400,
+                                              "error": "Bad Request",
+                                              "message": "Invalid language code: 'fr_FR'. Supported codes are: es_ES, en_EN",
+                                              "path": "/api/v1/education"
+                                            }
+                                            """)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal Server Error",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(value = """
+                                            {
+                                              "timestamp": "2026-02-05T12:30:00",
+                                              "status": 500,
+                                              "error": "Internal Server Error",
+                                              "message": "An unexpected error occurred while processing your request",
+                                              "path": "/api/v1/education"
                                             }
                                             """)
                             )
@@ -96,13 +113,9 @@ public class EducationController {
 
     @Operation(
             summary = "Get a formal education entry by id",
-            description = """
-                    Returns the details of a specific education entry
-                    identified by its numeric id.
-                    If the education entry does not exist, a 404 response is returned.
-                    """,
+            description = "Returns the details of a specific education entry identified by its numeric id.",
             parameters = {
-                @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Idioma de la respuesta: es_ES para español, en_EN para inglés", example = "es_ES", required = false)
+                @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Response language: es_ES for Spanish, en_EN for English", example = "es_ES", required = false)
             },
             responses = {
                     @ApiResponse(
@@ -125,25 +138,49 @@ public class EducationController {
                             )
                     ),
                     @ApiResponse(
-                            responseCode = "404",
-                            description = "Education entry not found",
+                            responseCode = "400",
+                            description = "Bad Request - Invalid language code",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(value = """
                                             {
-                                              "error": "Education entry not found."
+                                              "timestamp": "2026-02-05T12:30:00",
+                                              "status": 400,
+                                              "error": "Bad Request",
+                                              "message": "Invalid language code: 'fr_FR'. Supported codes are: es_ES, en_EN",
+                                              "path": "/api/v1/education/3012"
+                                            }
+                                            """)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Not Found - Education entry does not exist",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(value = """
+                                            {
+                                              "timestamp": "2026-02-05T12:30:00",
+                                              "status": 404,
+                                              "error": "Not Found",
+                                              "message": "Education with id '9999' not found",
+                                              "path": "/api/v1/education/9999"
                                             }
                                             """)
                             )
                     ),
                     @ApiResponse(
                             responseCode = "500",
-                            description = "Internal server error",
+                            description = "Internal Server Error",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(value = """
                                             {
-                                              "error": "Internal server error."
+                                              "timestamp": "2026-02-05T12:30:00",
+                                              "status": 500,
+                                              "error": "Internal Server Error",
+                                              "message": "An unexpected error occurred while processing your request",
+                                              "path": "/api/v1/education/3012"
                                             }
                                             """)
                             )
@@ -157,9 +194,7 @@ public class EducationController {
             @RequestHeader(value = "Accept-Language", defaultValue = "es_ES") String locale
     ) {
         Language language = Language.fromCode(locale);
-        return getByIdUseCase.execute(id, language)
-                .map(mapper::toResponse)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        EducationItem education = getByIdUseCase.execute(id, language);
+        return ResponseEntity.ok(mapper.toResponse(education));
     }
 }

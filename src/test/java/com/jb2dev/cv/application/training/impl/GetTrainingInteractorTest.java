@@ -3,6 +3,7 @@ package com.jb2dev.cv.application.training.impl;
 import com.jb2dev.cv.domain.Language;
 import com.jb2dev.cv.domain.training.model.TrainingItem;
 import com.jb2dev.cv.domain.training.ports.TrainingRepository;
+import com.jb2dev.cv.domain.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,6 +14,7 @@ import java.time.YearMonth;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -43,28 +45,29 @@ class GetTrainingInteractorTest {
         when(trainingRepository.findTrainingById(credentialId, language)).thenReturn(Optional.of(expectedTraining));
 
         // When
-        Optional<TrainingItem> result = interactor.execute(credentialId, language);
+        TrainingItem result = interactor.execute(credentialId, language);
 
         // Then
-        assertThat(result).isPresent();
-        assertThat(result.get()).isEqualTo(expectedTraining);
-        assertThat(result.get().credentialId()).isEqualTo(credentialId);
-        assertThat(result.get().title()).isEqualTo("AWS Certified Solutions Architect");
+        assertThat(result).isNotNull();
+        assertThat(result).isEqualTo(expectedTraining);
+        assertThat(result.credentialId()).isEqualTo(credentialId);
+        assertThat(result.title()).isEqualTo("AWS Certified Solutions Architect");
         verify(trainingRepository).findTrainingById(credentialId, language);
     }
 
     @Test
-    void shouldReturnEmptyWhenTrainingNotFound() {
+    void shouldThrowExceptionWhenTrainingNotFound() {
         // Given
         String credentialId = "CERT-NOTFOUND";
         Language language = Language.EN_EN;
         when(trainingRepository.findTrainingById(credentialId, language)).thenReturn(Optional.empty());
 
-        // When
-        Optional<TrainingItem> result = interactor.execute(credentialId, language);
+        // When & Then
+        assertThatThrownBy(() -> interactor.execute(credentialId, language))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessageContaining("Training")
+                .hasMessageContaining("CERT-NOTFOUND");
 
-        // Then
-        assertThat(result).isEmpty();
         verify(trainingRepository).findTrainingById(credentialId, language);
     }
 
@@ -86,11 +89,11 @@ class GetTrainingInteractorTest {
         when(trainingRepository.findTrainingById(credentialId, language)).thenReturn(Optional.of(expectedTraining));
 
         // When
-        Optional<TrainingItem> result = interactor.execute(credentialId, language);
+        TrainingItem result = interactor.execute(credentialId, language);
 
         // Then
-        assertThat(result).isPresent();
-        assertThat(result.get().title()).isEqualTo("Certificación AWS Solutions Architect");
+        assertThat(result).isNotNull();
+        assertThat(result.title()).isEqualTo("Certificación AWS Solutions Architect");
         verify(trainingRepository).findTrainingById(credentialId, language);
     }
 }

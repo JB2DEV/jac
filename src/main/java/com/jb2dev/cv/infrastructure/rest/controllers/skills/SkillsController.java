@@ -3,6 +3,8 @@ package com.jb2dev.cv.infrastructure.rest.controllers.skills;
 import com.jb2dev.cv.application.skills.*;
 import com.jb2dev.cv.application.skills.query.TechnicalSkillSearchCriteria;
 import com.jb2dev.cv.domain.Language;
+import com.jb2dev.cv.domain.skills.model.LanguageSkill;
+import com.jb2dev.cv.domain.skills.model.SoftSkill;
 import com.jb2dev.cv.infrastructure.rest.dto.skills.LanguageSkillDetailResponse;
 import com.jb2dev.cv.infrastructure.rest.dto.skills.LanguageSkillResponse;
 import com.jb2dev.cv.infrastructure.rest.dto.skills.SoftSkillResponse;
@@ -40,7 +42,7 @@ public class SkillsController {
     @Operation(
             summary = "List language skills",
             description = """
-            Returns a list of all available language skills. Each language skill represents a spoken language and includes basic proficiency information. The response is internationalized according to the Accept-Language header (es_ES or en_EN).
+            Returns a list of all available language skills. Each language skill represents a spoken language and includes basic proficiency information.
             """,
             parameters = {
                 @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Response language: es_ES for Spanish, en_EN for English", example = "es_ES", required = false)
@@ -79,7 +81,7 @@ public class SkillsController {
     @Operation(
             summary = "Get a language skill by id",
             description = """
-            Returns the detailed information of a specific language skill identified by its numeric id. The response is internationalized according to the Accept-Language header (es_ES or en_EN). If the language skill does not exist, a 404 response is returned.
+            Returns the detailed information of a specific language skill identified by its numeric id.
             """,
             parameters = {
                 @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Response language: es_ES for Spanish, en_EN for English", example = "es_ES", required = false)
@@ -121,16 +123,14 @@ public class SkillsController {
             @RequestHeader(value = "Accept-Language", defaultValue = "es_ES") String locale
     ) {
         Language language = Language.fromCode(locale);
-        return languageByIdUseCase.execute(id, language)
-                .map(mapper::toDetailResponse)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        LanguageSkill skill = languageByIdUseCase.execute(id, language);
+        return ResponseEntity.ok(mapper.toDetailResponse(skill));
     }
 
     @Operation(
             summary = "List technical skills",
             description = """
-                Returns a list of technical skills. You can filter the results by name or category query parameters. - If name is provided, returns skills matching that name. - If category is provided, returns skills in that category. - If neither is provided, returns all technical skills. This information is common for all languages (not internationalized, Accept-Language is ignored).
+                Returns a list of technical skills. You can filter the results by name or category query parameters. If name is provided, returns skills matching that name. If category is provided, returns skills in that category. If neither is provided, returns all technical skills.
                 """,
             parameters = {
                 @Parameter(name = "name", description = "Filter skills by name (partial match)", example = "Java"),
@@ -187,7 +187,7 @@ public class SkillsController {
     @Operation(
             summary = "List soft skills",
             description = """
-            Returns a list of all available soft skills. Soft skills represent personal and interpersonal abilities such as communication, teamwork, or problem-solving. The response is internationalized according to the Accept-Language header (es_ES or en_EN).
+            Returns a list of all available soft skills. Soft skills represent personal and interpersonal abilities such as communication, teamwork, or problem-solving.
             """,
             parameters = {
                 @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Response language: es_ES for Spanish, en_EN for English", example = "es_ES", required = false)
@@ -226,7 +226,7 @@ public class SkillsController {
     @Operation(
             summary = "Get a soft skill by id",
             description = """
-            Returns the details of a specific soft skill identified by its id. The response is internationalized according to the Accept-Language header (es_ES or en_EN). If no soft skill exists with the provided id, a 404 response is returned.
+            Returns the details of a specific soft skill identified by its id.
             """,
             parameters = {
                 @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Response language: es_ES for Spanish, en_EN for English", example = "es_ES", required = false)
@@ -266,9 +266,7 @@ public class SkillsController {
             @RequestHeader(value = "Accept-Language", defaultValue = "es_ES") String locale
     ) {
         Language language = Language.fromCode(locale);
-        return softByIdUseCase.execute(id, language)
-                .map(mapper::toResponse)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        SoftSkill skill = softByIdUseCase.execute(id, language);
+        return ResponseEntity.ok(mapper.toResponse(skill));
     }
 }
