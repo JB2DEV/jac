@@ -3,6 +3,7 @@ package com.jb2dev.cv.infrastructure.rest.controllers.training;
 import com.jb2dev.cv.application.training.GetTrainingUseCase;
 import com.jb2dev.cv.application.training.ListTrainingsUseCase;
 import com.jb2dev.cv.domain.Language;
+import com.jb2dev.cv.domain.training.model.TrainingItem;
 import com.jb2dev.cv.infrastructure.rest.dto.training.TrainingDetailResponse;
 import com.jb2dev.cv.infrastructure.rest.dto.training.TrainingResponse;
 import com.jb2dev.cv.infrastructure.rest.mappers.training.TrainingRestMapper;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -40,7 +40,7 @@ public class TrainingController {
             description = "Returns a list of non-formal training entries including courses, workshops, and learning paths. " +
                     "The list is sorted by issuance date in descending order.",
             parameters = {
-                @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Idioma de la respuesta: es_ES para español, en_EN para inglés", example = "es_ES", required = false)
+                @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Response language: es_ES for Spanish, en_EN for English", example = "es_ES", required = false)
             },
             responses = {
                     @ApiResponse(
@@ -64,13 +64,33 @@ public class TrainingController {
                             )
                     ),
                     @ApiResponse(
-                            responseCode = "500",
-                            description = "Internal server error",
+                            responseCode = "400",
+                            description = "Bad Request - Invalid language code",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(value = """
                         {
-                          "error": "Internal server error."
+                          "timestamp": "2026-02-05T12:30:00",
+                          "status": 400,
+                          "error": "Bad Request",
+                          "message": "Invalid language code: 'ru_RU'. Supported codes are: es_ES, en_EN",
+                          "path": "/api/v1/training"
+                        }
+                    """)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal Server Error",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(value = """
+                        {
+                          "timestamp": "2026-02-05T12:30:00",
+                          "status": 500,
+                          "error": "Internal Server Error",
+                          "message": "An unexpected error occurred while processing your request",
+                          "path": "/api/v1/training"
                         }
                     """)
                             )
@@ -85,10 +105,9 @@ public class TrainingController {
 
     @Operation(
             summary = "Get a training entry by credential ID",
-            description = "Retrieves detailed information of a training entry given its unique credential ID. " +
-                    "The credential ID is the identifier of the training.",
+            description = "Retrieves detailed information of a training entry given its unique credential ID." ,
             parameters = {
-                @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Idioma de la respuesta: es_ES para español, en_EN para inglés", example = "es_ES", required = false)
+                @Parameter(name = "Accept-Language", in = ParameterIn.HEADER, description = "Response language: es_ES for Spanish, en_EN for English", example = "es_ES", required = false)
             },
             responses = {
                     @ApiResponse(
@@ -101,7 +120,7 @@ public class TrainingController {
                         {
                           "title": "Backend Development with Spring Boot",
                           "provider": "OpenWebinars",
-                          "location": "España (online)",
+                          "location": "Spain (online)",
                           "issued_date": "2025-03",
                           "credential_id": "EUJB",
                           "credential_url": "https://openwebinars.net/cert/EUJB",
@@ -111,25 +130,49 @@ public class TrainingController {
                             )
                     ),
                     @ApiResponse(
-                            responseCode = "404",
-                            description = "Training entry not found",
+                            responseCode = "400",
+                            description = "Bad Request - Invalid language code",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(value = """
                         {
-                          "error": "Training entry with credential ID 'XXXX' not found."
+                          "timestamp": "2026-02-05T12:30:00",
+                          "status": 400,
+                          "error": "Bad Request",
+                          "message": "Invalid language code: 'ru_RU'. Supported codes are: es_ES, en_EN",
+                          "path": "/api/v1/training/EUJB"
+                        }
+                    """)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Not Found - Training entry does not exist",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    examples = @ExampleObject(value = """
+                        {
+                          "timestamp": "2026-02-05T12:30:00",
+                          "status": 404,
+                          "error": "Not Found",
+                          "message": "Training with id 'NOTFOUND' not found",
+                          "path": "/api/v1/training/NOTFOUND"
                         }
                     """)
                             )
                     ),
                     @ApiResponse(
                             responseCode = "500",
-                            description = "Internal server error",
+                            description = "Internal Server Error",
                             content = @Content(
                                     mediaType = "application/json",
                                     examples = @ExampleObject(value = """
                         {
-                          "error": "Internal server error."
+                          "timestamp": "2026-02-05T12:30:00",
+                          "status": 500,
+                          "error": "Internal Server Error",
+                          "message": "An unexpected error occurred while processing your request",
+                          "path": "/api/v1/training/EUJB"
                         }
                     """)
                             )
@@ -147,9 +190,7 @@ public class TrainingController {
             @RequestHeader(value = "Accept-Language", defaultValue = "es_ES") String locale
     ) {
         Language language = Language.fromCode(locale);
-        return getByIdUseCase.execute(credentialId, language)
-                .map(mapper::toResponse)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        TrainingItem training = getByIdUseCase.execute(credentialId, language);
+        return ResponseEntity.ok(mapper.toResponse(training));
     }
 }

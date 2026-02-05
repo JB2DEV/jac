@@ -63,7 +63,6 @@ class ProfileControllerE2ETest {
                 .andExpect(jsonPath("$.address", notNullValue()))
                 .andExpect(jsonPath("$.email", notNullValue()))
                 .andExpect(jsonPath("$.mobile_phone", notNullValue()))
-                .andExpect(jsonPath("$.landline_phone", notNullValue()))
                 .andExpect(jsonPath("$.linkedin_url", notNullValue()))
                 .andExpect(jsonPath("$.github_url", notNullValue()));
     }

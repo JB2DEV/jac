@@ -1,5 +1,6 @@
 package com.jb2dev.cv.domain;
 
+import com.jb2dev.cv.domain.exception.InvalidLanguageException;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -49,16 +50,16 @@ class LanguageTest {
     void shouldThrowExceptionWhenInvalidCode() {
         // When & Then
         assertThatThrownBy(() -> Language.fromCode("fr_FR"))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Invalid language code: fr_FR");
+                .isInstanceOf(InvalidLanguageException.class)
+                .hasMessageContaining("fr_FR");
     }
 
     @Test
     void shouldThrowExceptionWhenNullCode() {
         // When & Then
         assertThatThrownBy(() -> Language.fromCode(null))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Invalid language code: null");
+                .isInstanceOf(InvalidLanguageException.class)
+                .hasMessageContaining("null");
     }
 
     @Test
