@@ -7,14 +7,24 @@ spring:
   jackson:
     property-naming-strategy: SNAKE_CASE
 
+logging:
+  level:
+    root: INFO
+    com.jb2dev.cv: DEBUG
+    org.springframework.web: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level [%X{correlationId:-NO-CORRELATION-ID}] %logger{36} - %msg%n"
+
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,prometheus
+        include: health,info,prometheus,loggers
   endpoint:
     health:
       show-details: always
+    loggers:
+      enabled: true
 
 springdoc:
   api-docs:
