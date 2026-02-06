@@ -5,10 +5,12 @@ import com.jb2dev.cv.domain.Language;
 import com.jb2dev.cv.domain.skills.model.LanguageSkill;
 import com.jb2dev.cv.domain.skills.ports.SkillsRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class ListLanguageSkillsInteractor implements ListLanguageSkillsUseCase {
@@ -17,6 +19,9 @@ public class ListLanguageSkillsInteractor implements ListLanguageSkillsUseCase {
 
   @Override
   public List<LanguageSkill> execute(Language language) {
-    return skillsRepository.findAllLanguages(language);
+    log.info("Executing ListLanguageSkills use case for language: {}", language);
+    List<LanguageSkill> result = skillsRepository.findAllLanguages(language);
+    log.debug("Retrieved {} language skills", result.size());
+    return result;
   }
 }

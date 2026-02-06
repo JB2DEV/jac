@@ -5,10 +5,12 @@ import com.jb2dev.cv.domain.Language;
 import com.jb2dev.cv.domain.training.model.TrainingItem;
 import com.jb2dev.cv.domain.training.ports.TrainingRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class ListTrainingsInteractor implements ListTrainingsUseCase {
@@ -17,6 +19,9 @@ public class ListTrainingsInteractor implements ListTrainingsUseCase {
 
   @Override
   public List<TrainingItem> execute(Language language) {
-    return trainingRepository.findAllTrainings(language);
+    log.info("Executing ListTrainings use case for language: {}", language);
+    List<TrainingItem> result = trainingRepository.findAllTrainings(language);
+    log.debug("Retrieved {} training items", result.size());
+    return result;
   }
 }

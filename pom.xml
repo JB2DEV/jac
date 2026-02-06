@@ -64,6 +64,13 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- Logstash encoder for JSON logging in production -->
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>7.4</version>
+        </dependency>
+
         <!--  Tests  -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

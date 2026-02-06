@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!--
+        Logback configuration for jb2dev-cv-api
+
+        This configuration provides:
+        - Correlation ID in every log statement
+        - Different formats for development and production
+        - Proper log levels per package
+        - Console and (optionally) file appenders
+        - Async logging for performance
+
+        Spring profiles:
+        - default/dev: Human-readable console logs
+        - prod: JSON-formatted logs ready for log aggregators (ELK, Grafana Loki)
+    -->
+
+    <!-- Include Spring Boot defaults -->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <!-- Property definitions -->
+    <property name="APP_NAME" value="jb2dev-cv-api"/>
+    <property name="LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level [%X{correlationId:-NO-CORRELATION-ID}] %logger{36} - %msg%n"/>
+
+    <!-- Development profile: Human-readable logs -->
+    <springProfile name="dev,default,!prod">
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>${LOG_PATTERN}</pattern>
+                <charset>UTF-8</charset>
+            </encoder>
+        </appender>
+
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+
+        <!-- Application-specific logging -->
+        <logger name="com.jb2dev.cv" level="DEBUG"/>
+
+        <!-- Reduce noise from Spring -->
+        <logger name="org.springframework" level="INFO"/>
+        <logger name="org.springframework.web" level="DEBUG"/>
+
+        <!-- Reduce noise from other libraries -->
+        <logger name="org.hibernate" level="WARN"/>
+        <logger name="org.apache" level="WARN"/>
+    </springProfile>
+
+    <!-- Production profile: JSON logs for log aggregation -->
+    <springProfile name="prod">
+        <appender name="CONSOLE_JSON" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+        </appender>
+
+        <!-- Optional: File appender for production (if needed) -->
+        <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>logs/${APP_NAME}.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>logs/${APP_NAME}-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+                <maxHistory>30</maxHistory>
+                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>100MB</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+            </rollingPolicy>
+            <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+        </appender>
+
+        <!-- Async appender for better performance -->
+        <appender name="ASYNC_CONSOLE" class="ch.qos.logback.classic.AsyncAppender">
+            <queueSize>512</queueSize>
+            <discardingThreshold>0</discardingThreshold>
+            <appender-ref ref="CONSOLE_JSON"/>
+        </appender>
+
+        <root level="INFO">
+            <appender-ref ref="ASYNC_CONSOLE"/>
+            <!-- Uncomment to enable file logging in production -->
+            <!-- <appender-ref ref="FILE"/> -->
+        </root>
+
+        <!-- Application-specific logging -->
+        <logger name="com.jb2dev.cv" level="INFO"/>
+
+        <!-- Reduce noise from frameworks -->
+        <logger name="org.springframework" level="WARN"/>
+        <logger name="org.hibernate" level="WARN"/>
+        <logger name="org.apache" level="WARN"/>
+    </springProfile>
+
+
+</configuration>
