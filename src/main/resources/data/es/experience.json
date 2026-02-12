@@ -1,0 +1,57 @@
+[
+  {
+    "id": 6541,
+    "role": "Backend DevOps Engineer - Telefónica",
+    "company": "BCNC GROUP",
+    "location": "Barcelona, Spain",
+    "start_date": "2025-03-01",
+    "end_date": "2025-08-15",
+    "current": false,
+    "summary": "Contribución en varios proyectos como DevOps y Backend Developer.",
+    "description": "Contribución en varios proyectos como DevOps y Backend Developer. Diseño y mantenimiento de pipelines CI/CD con GitHub Actions y despliegues en Kubernetes usando Helm. Desarrollo de servicios backend en Kotlin con Spring Boot y arquitectura DDD (Hexagonal)."
+  },
+  {
+    "id": 3032,
+    "role": "Full Stack Developer (DOME Marketplace)",
+    "company": "IN2 Ingeniería de la Información",
+    "location": "Barcelona, Spain",
+    "start_date": "2024-09-01",
+    "end_date": "2025-02-01",
+    "current": false,
+    "summary": "Desarrollo de un marketplace europeo para servicios cloud (SaaS).",
+    "description": "Desarrollo de un marketplace para servicios Cloud & Edge (UE). Backend en Java 17 + Spring Boot 3 y frontend con AngularJS. Orquestación CI/CD en Kubernetes con GitHub Flow."
+  },
+  {
+    "id": 7188,
+    "role": "Mobile Developer (IDEP / EUDI Wallet)",
+    "company": "IN2 Ingeniería de la Información",
+    "location": "Barcelona, Spain",
+    "start_date": "2024-04-01",
+    "end_date": "2024-08-01",
+    "current": false,
+    "summary": "Migración de una aplicación nativa a Kotlin/Jetpack Compose y preparación del lanzamiento para dispositivos móviles.",
+    "description": "Liderazgo en la migración de una app nativa a Kotlin/Jetpack Compose. Implementación de arquitectura MVVM y coordinación del despliegue móvil. Gestión de documentación para publicación en iOS y Android."
+  },
+  {
+    "id": 9772,
+    "role": "Backend Developer (IDEP)",
+    "company": "IN2 Ingeniería de la Información",
+    "location": "Barcelona, Spain",
+    "start_date": "2023-09-01",
+    "end_date": "2024-08-01",
+    "current": false,
+    "summary": "Desarrollo de una solución de credenciales verificables alineada con OpenID4VC.",
+    "description": "Desarrollo de una solución de credenciales verificables conforme a OPENID4VC. Diseño de microservicios en Java/Kotlin con Spring Boot 3. Despliegue en entorno cloud con Azure DevOps."
+  },
+  {
+    "id": 9213,
+    "role": "Junior Backend Developer",
+    "company": "GFT IT Consulting, S.L.",
+    "location": "Sant Cugat del Vallès, Spain",
+    "start_date": "2021-11-14",
+    "end_date": "2023-09-15",
+    "current": false,
+    "summary": "Desarrollo de micro-servicios en Java y documentación de APIs",
+    "description": "Desarrollo de micro-servicios en Java con Spring y SpringBoot. Desarrollo de algunas funciones en la arquitectura de distintas aplicaciones. Documentación de la API REST mediante Swagger. Control de versiones mediante Git y el estándar GitFlow. Metodología de trabajo ágil mediante SCRUM."
+  }
+]

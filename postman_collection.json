@@ -1,0 +1,696 @@
+{
+  "info": {
+    "_postman_id": "b1e1e1e1-0000-0000-0000-000000000001",
+    "name": "JAC CV API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Complete collection for JAC CV API"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Education",
+      "item": [
+        {
+          "name": "Success Cases",
+          "item": [
+            {
+              "name": "List All Education (Spanish)",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Accept-Language", "value": "es_ES" }],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/education",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "education"]
+                }
+              }
+            },
+            {
+              "name": "List All Education (English)",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Accept-Language", "value": "en_EN" }],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/education",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "education"]
+                }
+              }
+            },
+            {
+              "name": "Get Education by ID (Spanish)",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Accept-Language", "value": "es_ES" }],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/education/8792",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "education", "8792"]
+                }
+              }
+            },
+            {
+              "name": "Get Education by ID (English)",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Accept-Language", "value": "en_EN" }],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/education/8792",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "education", "8792"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Error Cases",
+          "item": [
+            {
+              "name": "Get Education - Not Found (404)",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Accept-Language", "value": "es_ES" }],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/education/9999",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "education", "9999"]
+                }
+              }
+            },
+            {
+              "name": "Get Education - Invalid Language (400)",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Accept-Language", "value": "fr_FR" }],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/education/3012",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "education", "3012"]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Experience",
+      "item": [
+        {
+          "name": "Success Cases",
+          "item": [
+            {
+              "name": "List All Experience (Spanish)",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Accept-Language", "value": "es_ES" }],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/experience",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "experience"]
+                }
+              }
+            },
+            {
+              "name": "List All Experience (English)",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Accept-Language", "value": "en_EN" }],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/experience",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "experience"]
+                }
+              }
+            },
+            {
+              "name": "Get Experience by ID (Spanish)",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Accept-Language", "value": "es_ES" }],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/experience/6541",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "experience", "6541"]
+                }
+              }
+            },
+            {
+              "name": "Get Experience by ID (English)",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Accept-Language", "value": "en_EN" }],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/experience/6541",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "experience", "6541"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Error Cases",
+          "item": [
+            {
+              "name": "Get Experience - Not Found (404)",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Accept-Language", "value": "es_ES" }],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/experience/9999",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "experience", "9999"]
+                }
+              }
+            },
+            {
+              "name": "Get Experience - Invalid Language (400)",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Accept-Language", "value": "de_DE" }],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/experience/6541",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "experience", "6541"]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "item": [
+        {
+          "name": "Personal Info",
+          "item": [
+            {
+              "name": "Get Personal Info (Spanish)",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Accept-Language", "value": "es_ES" }],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/personal",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "personal"]
+                }
+              }
+            },
+            {
+              "name": "Get Personal Info (English)",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Accept-Language", "value": "en_EN" }],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/personal",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "personal"]
+                }
+              }
+            },
+            {
+              "name": "Get Personal Info - Invalid Language (400)",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Accept-Language", "value": "invalid" }],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/personal",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "personal"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Contact Info",
+          "item": [
+            {
+              "name": "Get Contact Info (Spanish)",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Accept-Language", "value": "es_ES" }],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/contact",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "contact"]
+                }
+              }
+            },
+            {
+              "name": "Get Contact Info (English)",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Accept-Language", "value": "en_EN" }],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/contact",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "contact"]
+                }
+              }
+            },
+            {
+              "name": "Get Contact Info - Invalid Language (400)",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Accept-Language", "value": "pt_BR" }],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/contact",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "contact"]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Skills",
+      "item": [
+        {
+          "name": "Language Skills",
+          "item": [
+            {
+              "name": "Success Cases",
+              "item": [
+                {
+                  "name": "List All Language Skills (Spanish)",
+                  "request": {
+                    "method": "GET",
+                    "header": [{ "key": "Accept-Language", "value": "es_ES" }],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v1/skills/languages",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "v1", "skills", "languages"]
+                    }
+                  }
+                },
+                {
+                  "name": "List All Language Skills (English)",
+                  "request": {
+                    "method": "GET",
+                    "header": [{ "key": "Accept-Language", "value": "en_EN" }],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v1/skills/languages",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "v1", "skills", "languages"]
+                    }
+                  }
+                },
+                {
+                  "name": "Get Language Skill by ID (Spanish)",
+                  "request": {
+                    "method": "GET",
+                    "header": [{ "key": "Accept-Language", "value": "es_ES" }],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v1/skills/languages/2354",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "v1", "skills", "languages", "2354"]
+                    }
+                  }
+                },
+                {
+                  "name": "Get Language Skill by ID (English)",
+                  "request": {
+                    "method": "GET",
+                    "header": [{ "key": "Accept-Language", "value": "en_EN" }],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v1/skills/languages/2354",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "v1", "skills", "languages", "2354"]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Error Cases",
+              "item": [
+                {
+                  "name": "Get Language Skill - Not Found (404)",
+                  "request": {
+                    "method": "GET",
+                    "header": [{ "key": "Accept-Language", "value": "es_ES" }],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v1/skills/languages/9999",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "v1", "skills", "languages", "9999"]
+                    }
+                  }
+                },
+                {
+                  "name": "Get Language Skill - Invalid Language (400)",
+                  "request": {
+                    "method": "GET",
+                    "header": [{ "key": "Accept-Language", "value": "ja_JP" }],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v1/skills/languages/2354",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "v1", "skills", "languages", "2354"]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Technical Skills",
+          "item": [
+            {
+              "name": "List All Technical Skills",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/skills/technical",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "skills", "technical"]
+                }
+              }
+            },
+            {
+              "name": "Search Technical Skills by Name - Java",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/skills/technical?name=Java",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "skills", "technical"],
+                  "query": [{ "key": "name", "value": "Java" }]
+                }
+              }
+            },
+            {
+              "name": "Search Technical Skills by Name - Spring",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/skills/technical?name=Spring",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "skills", "technical"],
+                  "query": [{ "key": "name", "value": "Spring" }]
+                }
+              }
+            },
+            {
+              "name": "Filter Technical Skills by Category - Framework",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/skills/technical?category=Framework",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "skills", "technical"],
+                  "query": [{ "key": "category", "value": "Framework" }]
+                }
+              }
+            },
+            {
+              "name": "Filter Technical Skills by Category - Language",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/skills/technical?category=Language",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "skills", "technical"],
+                  "query": [{ "key": "category", "value": "Language" }]
+                }
+              }
+            },
+            {
+              "name": "Filter Technical Skills by Category - Database",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/skills/technical?category=Database",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "skills", "technical"],
+                  "query": [{ "key": "category", "value": "Database" }]
+                }
+              }
+            },
+            {
+              "name": "Filter Technical Skills by Category - Cloud",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/skills/technical?category=Cloud",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "skills", "technical"],
+                  "query": [{ "key": "category", "value": "Cloud" }]
+                }
+              }
+            },
+            {
+              "name": "Combined Filter - Name and Category",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/skills/technical?name=Spring&category=Framework",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "skills", "technical"],
+                  "query": [
+                    { "key": "name", "value": "Spring" },
+                    { "key": "category", "value": "Framework" }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Soft Skills",
+          "item": [
+            {
+              "name": "Success Cases",
+              "item": [
+                {
+                  "name": "List All Soft Skills (Spanish)",
+                  "request": {
+                    "method": "GET",
+                    "header": [{ "key": "Accept-Language", "value": "es_ES" }],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v1/skills/soft",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "v1", "skills", "soft"]
+                    }
+                  }
+                },
+                {
+                  "name": "List All Soft Skills (English)",
+                  "request": {
+                    "method": "GET",
+                    "header": [{ "key": "Accept-Language", "value": "en_EN" }],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v1/skills/soft",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "v1", "skills", "soft"]
+                    }
+                  }
+                },
+                {
+                  "name": "Get Soft Skill by ID (Spanish)",
+                  "request": {
+                    "method": "GET",
+                    "header": [{ "key": "Accept-Language", "value": "es_ES" }],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v1/skills/soft/4729",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "v1", "skills", "soft", "4729"]
+                    }
+                  }
+                },
+                {
+                  "name": "Get Soft Skill by ID (English)",
+                  "request": {
+                    "method": "GET",
+                    "header": [{ "key": "Accept-Language", "value": "en_EN" }],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v1/skills/soft/4729",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "v1", "skills", "soft", "4729"]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Error Cases",
+              "item": [
+                {
+                  "name": "Get Soft Skill - Not Found (404)",
+                  "request": {
+                    "method": "GET",
+                    "header": [{ "key": "Accept-Language", "value": "es_ES" }],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v1/skills/soft/9999",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "v1", "skills", "soft", "9999"]
+                    }
+                  }
+                },
+                {
+                  "name": "Get Soft Skill - Invalid Language (400)",
+                  "request": {
+                    "method": "GET",
+                    "header": [{ "key": "Accept-Language", "value": "zh_CN" }],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v1/skills/soft/4729",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "v1", "skills", "soft", "4729"]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Training",
+      "item": [
+        {
+          "name": "Success Cases",
+          "item": [
+            {
+              "name": "List All Training (Spanish)",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Accept-Language", "value": "es_ES" }],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/training",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "training"]
+                }
+              }
+            },
+            {
+              "name": "List All Training (English)",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Accept-Language", "value": "en_EN" }],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/training",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "training"]
+                }
+              }
+            },
+            {
+              "name": "Get Training by Credential ID (Spanish)",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Accept-Language", "value": "es_ES" }],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/training/EUJB",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "training", "EUJB"]
+                }
+              }
+            },
+            {
+              "name": "Get Training by Credential ID (English)",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Accept-Language", "value": "en_EN" }],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/training/EUJB",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "training", "EUJB"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Error Cases",
+          "item": [
+            {
+              "name": "Get Training - Not Found (404)",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Accept-Language", "value": "es_ES" }],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/training/NOTFOUND",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "training", "NOTFOUND"]
+                }
+              }
+            },
+            {
+              "name": "Get Training - Invalid Language (400)",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Accept-Language", "value": "ru_RU" }],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/training/EUJB",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "training", "EUJB"]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "API Info",
+      "item": [
+        {
+          "name": "Swagger UI",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/swagger-ui",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "swagger-ui"]
+            }
+          }
+        },
+        {
+          "name": "OpenAPI Docs (JSON)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/openapi",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "openapi"]
+            }
+          }
+        },
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/actuator/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["actuator", "health"]
+            }
+          }
+        },
+        {
+          "name": "Info",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/actuator/info",
+              "host": ["{{baseUrl}}"],
+              "path": ["actuator", "info"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
