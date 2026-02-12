@@ -1,5 +1,10 @@
 # jb2dev-cv-api
 
+[![Release](https://img.shields.io/github/v/release/JB2DEV/jac)](https://github.com/JB2DEV/jac/releases)
+[![Java](https://img.shields.io/badge/Java-21-orange)](https://www.oracle.com/java/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.1-brightgreen)](https://spring.io/projects/spring-boot)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 Curriculum Vitae REST API - Portfolio project implementing a Java backend based on Spring Boot 3, strictly following **Hexagonal Architecture (Ports & Adapters)** and **Domain-Driven Design (DDD)** principles.
 
 ## Table of Contents
