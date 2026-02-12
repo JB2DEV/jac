@@ -620,7 +620,7 @@ management:
 
 ### OpenAPI Documentation
 
-- **Swagger UI**: `http://localhost:8080/api/v1/swagger-ui/index.html`
+- **Swagger UI**: `http://localhost:8080/api/v1/swagger-ui`
 - **OpenAPI JSON**: `http://localhost:8080/api/v1/openapi`
 
 ### Resources
@@ -671,10 +671,42 @@ curl -H "Accept-Language: en_EN" \
 ```
 
 ---
+## Docker Quick Start
+
+### Build and Run with Docker
+
+```powershell
+# Build the image
+docker build -t jac-api:1.0.0 .
+
+# Run in production mode
+docker run -d -p 8080:8080 -e SPRING_PROFILES_ACTIVE=prod --name jac-api jac-api:1.0.0
+
+# View logs
+docker logs -f jac-api
+```
+
+### Run with Docker Compose
+
+```powershell
+# Start all services
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop services
+docker-compose down
+```
+
+**See [DOCKER.md](docs/docker.md) for complete documentation.**
+
+---
 
 ## Related Documentation
 
 - **[Architecture](docs/architecture.md)** - Comprehensive architecture documentation covering Hexagonal Architecture, DDD patterns, component diagrams, request flows, and design decisions
 - **[Logging System](docs/logging-system.md)** - Detailed logging and observability documentation
+- **[Docker Guide](docs/docker.md)** - Complete guide for building, running, and deploying with Docker
 
 ---

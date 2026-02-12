@@ -1,0 +1,17 @@
+target/
+!target/*.jar
+.git/
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.DS_Store
+README.md
+CHANGELOG.md
+CONTRIBUTING.md
+docs/
+.mvn/
+mvnw
+mvnw.cmd
+

@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-02-12
+
+### Added
+- **Docker support** with production-ready containerization
+  - Multi-stage Dockerfile for optimized image size (~200MB)
+  - Docker Compose configuration with health checks
+  - Complete Docker documentation in English ([docker.md](docs/docker.md))
+  - .dockerignore for optimized build context
+- **Comprehensive documentation suite**
+  - CONTRIBUTING.md with contribution guidelines and coding standards
+  - CHANGELOG.md following Keep a Changelog format
+  - RELEASE_NOTES.md for v1.0.0
+  - MIT LICENSE
+  - README.md with professional badges (Release, Java, Spring Boot, License)
+
+### Fixed
+- Spring Boot Maven plugin configuration for executable JAR generation
+- Swagger UI URLs corrected to `/api/v1/swagger-ui` across all documentation
+- Docker build manifest issue resolved with proper repackage goal
+
+### Changed
+- Updated README.md with Docker Quick Start section
+- Enhanced .gitignore to exclude IDE configuration files
+- Reorganized documentation with docker.md in project root
+
 ## [1.0.0] - 2026-02-12
 
 ### Added
@@ -56,5 +81,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - JaCoCo for code coverage
 - JUnit 5, Mockito, AssertJ for testing
 
+[1.1.0]: https://github.com/JB2DEV/jac/releases/tag/v1.1.0
 [1.0.0]: https://github.com/JB2DEV/jac/releases/tag/v1.0.0
 
