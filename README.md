@@ -582,7 +582,7 @@ mvn package
 # Run application
 mvn spring-boot:run
 # or
-java -jar target/cv-api-1.0.0.jar
+java -jar target/cv-api-1.1.0.jar
 ```
 
 The application will be available at: `http://localhost:8080`
@@ -677,10 +677,10 @@ curl -H "Accept-Language: en_EN" \
 
 ```powershell
 # Build the image
-docker build -t jac-api:1.0.0 .
+docker build -t jac-api:1.1.0 .
 
 # Run in production mode
-docker run -d -p 8080:8080 -e SPRING_PROFILES_ACTIVE=prod --name jac-api jac-api:1.0.0
+docker run -d -p 8080:8080 -e SPRING_PROFILES_ACTIVE=prod --name jac-api jac-api:1.1.0
 
 # View logs
 docker logs -f jac-api
