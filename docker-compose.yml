@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   jac-api:
-    image: jac-api:1.0.0
+    image: jac-api:1.1.0
     container_name: jac-api
     build:
       context: .
