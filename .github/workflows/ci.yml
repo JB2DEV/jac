@@ -24,3 +24,8 @@ jobs:
     name: Integration Tests
     needs: unit-tests
     uses: ./.github/workflows/_reusable-integration-tests.yml
+
+  quality:
+    name: Code Quality
+    needs: integration-tests
+    uses: ./.github/workflows/_reusable-quality.yml
