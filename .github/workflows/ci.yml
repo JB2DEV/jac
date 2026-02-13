@@ -9,62 +9,18 @@ on:
       - develop
       - main
 
-permissions:
-  checks: write
-  contents: read
-
 jobs:
 
   build:
     name: Build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Java & Maven
-        uses: ./.github/actions/setup-java-maven
-
-      - name: Compile
-        run: mvn clean compile -B
+    uses: ./.github/workflows/_reusable-build.yml
 
   unit-tests:
     name: Unit Tests
-    runs-on: ubuntu-latest
     needs: build
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Java & Maven
-        uses: ./.github/actions/setup-java-maven
-
-      - name: Run unit tests
-        run: mvn test -P unit-tests -B
-
-      - name: Publish test results
-        uses: dorny/test-reporter@v1
-        if: always()
-        with:
-          name: Unit Test Results
-          path: target/surefire-reports/*.xml
-          reporter: java-junit
+    uses: ./.github/workflows/_reusable-unit-tests.yml
 
   integration-tests:
     name: Integration Tests
-    runs-on: ubuntu-latest
     needs: unit-tests
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Java & Maven
-        uses: ./.github/actions/setup-java-maven
-
-      - name: Run integration tests
-        run: mvn test -P integration-tests -B
-
-      - name: Publish test results
-        uses: dorny/test-reporter@v1
-        if: always()
-        with:
-          name: Integration Test Results
-          path: target/surefire-reports/*.xml
-          reporter: java-junit
+    uses: ./.github/workflows/_reusable-integration-tests.yml

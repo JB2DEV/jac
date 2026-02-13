@@ -1,0 +1,29 @@
+name: Unit Tests
+
+on:
+  workflow_call:
+
+permissions:
+  checks: write
+  contents: read
+
+jobs:
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Java & Maven
+        uses: ./.github/actions/setup-java-maven
+
+      - name: Run unit tests
+        run: mvn test -P unit-tests -B
+
+      - name: Publish test results
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: Unit Test Results
+          path: target/surefire-reports/*.xml
+          reporter: java-junit
