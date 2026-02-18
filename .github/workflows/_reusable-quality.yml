@@ -1,7 +1,12 @@
-name: Code Quality
+name: Reusable - Code Quality
 
 on:
   workflow_call:
+    secrets:
+      SONAR_TOKEN:
+        required: true
+      CODECOV_TOKEN:
+        required: true
 
 permissions:
   checks: write
@@ -14,12 +19,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Java & Maven
         uses: ./.github/actions/setup-java-maven
 
       - name: Run tests with coverage
-        run: mvn clean test jacoco:report -B
+        run: mvn clean verify jacoco:report -B
 
       - name: Upload JaCoCo report
         uses: actions/upload-artifact@v4
@@ -45,3 +52,14 @@ jobs:
           files: target/site/jacoco/jacoco.xml
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
+
+      - name: SonarCloud analysis
+        run: |
+          mvn sonar:sonar \
+            -Dsonar.projectKey=JB2DEV_jac \
+            -Dsonar.organization=jb2dev \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -B
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

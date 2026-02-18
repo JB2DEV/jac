@@ -11,6 +11,21 @@
         <spring-boot.version>3.4.1</spring-boot.version>
         <springdoc.version>2.5.0</springdoc.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- SonarCloud configuration -->
+        <sonar.projectKey>JB2DEV_jac</sonar.projectKey>
+        <sonar.organization>jb2dev</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.coverage.jacoco.xmlReportPaths>
+            ${project.build.directory}/site/jacoco/jacoco.xml
+        </sonar.coverage.jacoco.xmlReportPaths>
+        <sonar.coverage.exclusions>
+            **/infrastructure/**,
+            **/CvApiApplication.java
+        </sonar.coverage.exclusions>
+        <sonar.exclusions>
+            **/target/**,
+            **/CvApiApplication.java
+        </sonar.exclusions>
     </properties>
 
     <dependencyManagement>
@@ -226,6 +241,12 @@
                     </execution>
 
                 </executions>
+            </plugin>
+            <!-- SonarCloud: static code analysis -->
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.11.0.3922</version>
             </plugin>
 
         </plugins>

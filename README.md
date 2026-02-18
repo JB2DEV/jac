@@ -5,6 +5,9 @@
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.1-brightgreen)](https://spring.io/projects/spring-boot)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Coverage](https://codecov.io/gh/JB2DEV/jac/graph/badge.svg)](https://codecov.io/gh/JB2DEV/jac)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=JB2DEV_jac&metric=alert_status)](https://sonarcloud.io/dashboard?id=JB2DEV_jac)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=JB2DEV_jac&metric=bugs)](https://sonarcloud.io/dashboard?id=JB2DEV_jac)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=JB2DEV_jac&metric=code_smells)](https://sonarcloud.io/dashboard?id=JB2DEV_jac)
 
 Curriculum Vitae REST API - Portfolio project implementing a Java backend based on Spring Boot 3, strictly following **Hexagonal Architecture (Ports & Adapters)** and **Domain-Driven Design (DDD)** principles.
 

@@ -29,3 +29,6 @@ jobs:
     name: Code Quality
     needs: integration-tests
     uses: ./.github/workflows/_reusable-quality.yml
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
