@@ -19,7 +19,7 @@
             ${project.build.directory}/site/jacoco/jacoco.xml
         </sonar.coverage.jacoco.xmlReportPaths>
         <sonar.coverage.exclusions>
-            **/infrastructure/**,
+            **/target/**,
             **/CvApiApplication.java
         </sonar.coverage.exclusions>
         <sonar.exclusions>
