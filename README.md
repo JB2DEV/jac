@@ -1,13 +1,16 @@
 # jb2dev-cv-api
 
 [![Release](https://img.shields.io/github/v/release/JB2DEV/jac)](https://github.com/JB2DEV/jac/releases)
+[![CI](https://github.com/JB2DEV/jac/actions/workflows/ci.yml/badge.svg)](https://github.com/JB2DEV/jac/actions/workflows/ci.yml)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=JB2DEV_jac&metric=alert_status)](https://sonarcloud.io/dashboard?id=JB2DEV_jac)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=JB2DEV_jac&metric=coverage)](https://sonarcloud.io/dashboard?id=JB2DEV_jac)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=JB2DEV_jac&metric=bugs)](https://sonarcloud.io/dashboard?id=JB2DEV_jac)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=JB2DEV_jac&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=JB2DEV_jac)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=JB2DEV_jac&metric=code_smells)](https://sonarcloud.io/dashboard?id=JB2DEV_jac)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=JB2DEV_jac&metric=security_rating)](https://sonarcloud.io/dashboard?id=JB2DEV_jac)
 [![Java](https://img.shields.io/badge/Java-21-orange)](https://www.oracle.com/java/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.1-brightgreen)](https://spring.io/projects/spring-boot)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Coverage](https://codecov.io/gh/JB2DEV/jac/graph/badge.svg)](https://codecov.io/gh/JB2DEV/jac)
-[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=JB2DEV_jac&metric=alert_status)](https://sonarcloud.io/dashboard?id=JB2DEV_jac)
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=JB2DEV_jac&metric=bugs)](https://sonarcloud.io/dashboard?id=JB2DEV_jac)
-[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=JB2DEV_jac&metric=code_smells)](https://sonarcloud.io/dashboard?id=JB2DEV_jac)
 
 Curriculum Vitae REST API - Portfolio project implementing a Java backend based on Spring Boot 3, strictly following **Hexagonal Architecture (Ports & Adapters)** and **Domain-Driven Design (DDD)** principles.
 
