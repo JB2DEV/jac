@@ -32,3 +32,10 @@ jobs:
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  docker-validate:
+    name: Docker Build (validate)
+    needs: build
+    uses: ./.github/workflows/_reusable-docker.yml
+    with:
+      push: false
