@@ -43,3 +43,5 @@ jobs:
     name: Security Scan
     needs: build
     uses: ./.github/workflows/_reusable-security.yml
+    secrets:
+      NVD_API_KEY: ${{ secrets.NVD_API_KEY }}

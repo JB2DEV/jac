@@ -2,6 +2,9 @@ name: Security
 
 on:
   workflow_call:
+    secrets:
+      NVD_API_KEY:
+        required: true
 
 permissions:
   contents: read
@@ -20,6 +23,8 @@ jobs:
 
       - name: Run OWASP Dependency Check
         run: mvn verify -DskipTests -P owasp-dependency-check -B
+        env:
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
 
       - name: Upload OWASP report
         uses: actions/upload-artifact@v4
