@@ -314,6 +314,9 @@
                             <!-- NVD API Key from environment variable -->
                             <!--suppress UnresolvedMavenProperty -->
                             <nvdApiKey>${env.NVD_API_KEY}</nvdApiKey>
+                            <!-- Increase delay for CI environments to avoid rate limiting -->
+                            <nvdApiDelay>6000</nvdApiDelay>
+                            <nvdMaxRetryCount>10</nvdMaxRetryCount>
                         </configuration>
                         <executions>
                             <execution>
