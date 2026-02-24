@@ -1,0 +1,17 @@
+name: Build
+
+on:
+  workflow_call:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Java & Maven
+        uses: ./.github/actions/setup-java-maven
+
+      - name: Compile
+        run: mvn clean compile -B

@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+      - main
+
+jobs:
+
+  build:
+    name: Build
+    uses: ./.github/workflows/_reusable-build.yml
+
+  unit-tests:
+    name: Unit Tests
+    needs: build
+    uses: ./.github/workflows/_reusable-unit-tests.yml
+
+  integration-tests:
+    name: Integration Tests
+    needs: unit-tests
+    uses: ./.github/workflows/_reusable-integration-tests.yml
+
+  quality:
+    name: Code Quality
+    needs: integration-tests
+    uses: ./.github/workflows/_reusable-quality.yml
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  docker-validate:
+    name: Docker Build (validate)
+    needs: build
+    uses: ./.github/workflows/_reusable-docker.yml
+    with:
+      push: false
+
+  security:
+    name: Security Scan
+    needs: build
+    uses: ./.github/workflows/_reusable-security.yml

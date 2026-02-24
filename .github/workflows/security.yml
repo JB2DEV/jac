@@ -1,0 +1,11 @@
+name: Security Scan
+
+on:
+  schedule:
+    - cron: '0 3 * * 1'
+  workflow_dispatch:
+
+jobs:
+  security:
+    name: Security Analysis
+    uses: ./.github/workflows/_reusable-security.yml

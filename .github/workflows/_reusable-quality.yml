@@ -1,0 +1,56 @@
+name: Code Quality
+
+on:
+  workflow_call:
+    secrets:
+      SONAR_TOKEN:
+        required: true
+
+permissions:
+  checks: write
+  contents: read
+  pull-requests: write
+
+jobs:
+  quality:
+    name: Code Quality
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Java & Maven
+        uses: ./.github/actions/setup-java-maven
+
+      - name: Run tests with coverage
+        run: mvn clean verify jacoco:report -B
+
+      - name: Upload JaCoCo report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: jacoco-report
+          path: target/site/jacoco/
+          retention-days: 14
+
+      - name: Publish coverage summary
+        uses: madrapps/jacoco-report@v1.6.1
+        with:
+          paths: ${{ github.workspace }}/target/site/jacoco/jacoco.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          min-coverage-overall: 80
+          min-coverage-changed-files: 80
+          title: Code Coverage Report
+          update-comment: true
+
+      - name: SonarCloud analysis
+        run: |
+          mvn sonar:sonar \
+            -Dsonar.projectKey=JB2DEV_jac \
+            -Dsonar.organization=jb2dev \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -B
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
