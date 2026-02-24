@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.jb2dev</groupId>
     <artifactId>cv-api</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
     <name>jb2dev-cv-api</name>
     <description>CV REST API portfolio project (Java 21, Spring Boot 3, Hexagonal/DDD).</description>
     <properties>
@@ -34,7 +34,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
+                <version>1.2.0</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -63,21 +63,21 @@
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
-            <version>1.5.5.Final</version>
+            <version>1.2.0</version>
         </dependency>
 
         <!-- OpenAPI -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.5.0</version>
+            <version>1.2.0</version>
         </dependency>
 
         <!--  Lombok  -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.30</version>
+            <version>1.2.0</version>
             <scope>provided</scope>
         </dependency>
 
@@ -85,7 +85,7 @@
         <dependency>
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
-            <version>7.4</version>
+            <version>1.2.0</version>
         </dependency>
 
         <!--  Tests  -->
@@ -114,7 +114,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot.version}</version>
+                <version>1.2.0</version>
                 <executions>
                     <execution>
                         <goals>
@@ -136,19 +136,19 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.13.0</version>
+                <version>1.2.0</version>
                 <configuration>
                     <release>${java.version}</release>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.mapstruct</groupId>
                             <artifactId>mapstruct-processor</artifactId>
-                            <version>1.5.5.Final</version>
+                            <version>1.2.0</version>
                         </path>
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
-                            <version>1.18.30</version>
+                            <version>1.2.0</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
@@ -158,7 +158,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.5.0</version>
+                <version>1.2.0</version>
                 <executions>
                     <execution>
                         <id>enforce</id>
@@ -168,7 +168,7 @@
                         <configuration>
                             <rules>
                                 <requireJavaVersion>
-                                    <version>[21,)</version>
+                                    <version>1.2.0</version>
                                 </requireJavaVersion>
                             </rules>
                         </configuration>
@@ -180,7 +180,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.2.5</version>
+                <version>1.2.0</version>
                 <configuration>
                     <argLine>@{argLine}</argLine>
                 </configuration>
@@ -190,7 +190,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.11</version>
+                <version>1.2.0</version>
                 <executions>
 
                     <!-- Injects the JaCoCo agent before tests run -->
@@ -247,7 +247,7 @@
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
-                <version>3.11.0.3922</version>
+                <version>1.2.0</version>
             </plugin>
 
         </plugins>
