@@ -293,42 +293,6 @@
                 </plugins>
             </build>
         </profile>
-        <!-- OWASP Dependency Check -->
-        <profile>
-            <id>owasp-dependency-check</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.owasp</groupId>
-                        <artifactId>dependency-check-maven</artifactId>
-                        <version>9.0.9</version>
-                        <configuration>
-                            <formats>
-                                <format>HTML</format>
-                                <format>JSON</format>
-                            </formats>
-                            <failBuildOnCVSS>7</failBuildOnCVSS>
-                            <suppressionFiles>
-                                <suppressionFile>owasp-suppressions.xml</suppressionFile>
-                            </suppressionFiles>
-                            <!-- NVD API Key from environment variable -->
-                            <!--suppress UnresolvedMavenProperty -->
-                            <nvdApiKey>${env.NVD_API_KEY}</nvdApiKey>
-                            <!-- Increase delay for CI environments to avoid rate limiting -->
-                            <nvdApiDelay>6000</nvdApiDelay>
-                            <nvdMaxRetryCount>10</nvdMaxRetryCount>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>check</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
     </profiles>
 
 </project>

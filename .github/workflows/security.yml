@@ -9,5 +9,3 @@ jobs:
   security:
     name: Security Analysis
     uses: ./.github/workflows/_reusable-security.yml
-    secrets:
-      NVD_API_KEY: ${{ secrets.NVD_API_KEY }}

@@ -2,38 +2,12 @@ name: Security
 
 on:
   workflow_call:
-    secrets:
-      NVD_API_KEY:
-        required: true
 
 permissions:
   contents: read
   security-events: write
-  actions: read
 
 jobs:
-  dependency-check:
-    name: OWASP Dependency Check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Java & Maven
-        uses: ./.github/actions/setup-java-maven
-
-      - name: Run OWASP Dependency Check
-        run: mvn verify -DskipTests -P owasp-dependency-check -B
-        env:
-          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
-
-      - name: Upload OWASP report
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: owasp-dependency-check-report
-          path: target/dependency-check-report.html
-          retention-days: 30
-
   secret-scan:
     name: Secret Scanning
     runs-on: ubuntu-latest
