@@ -1,0 +1,91 @@
+prometheusStack:
+  enabled: true
+
+lokiStack:
+  enabled: true
+
+jaeger:
+  enabled: false
+
+apiNamespace: jac
+
+kube-prometheus-stack:
+  grafana:
+    enabled: true
+    adminPassword: "admin"
+    persistence:
+      enabled: false
+    service:
+      type: ClusterIP
+    additionalDataSources:
+      - name: Loki
+        type: loki
+        url: http://monitoring-loki:3100
+        isDefault: false
+        jsonData:
+          maxLines: 1000
+
+  prometheus:
+    enabled: true
+    prometheusSpec:
+      serviceMonitorSelectorNilUsesHelmValues: false
+      serviceMonitorNamespaceSelector: {}
+      serviceMonitorSelector: {}
+      retention: 24h
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "256Mi"
+        limits:
+          cpu: "500m"
+          memory: "512Mi"
+
+  alertmanager:
+    enabled: false
+
+  kubeControllerManager:
+    enabled: false
+  kubeScheduler:
+    enabled: false
+  kubeProxy:
+    enabled: false
+  kubeEtcd:
+    enabled: false
+
+loki-stack:
+  loki:
+    enabled: true
+    persistence:
+      enabled: false
+    config:
+      auth_enabled: false
+      ingester:
+        chunk_idle_period: 1m
+        chunk_retain_period: 30s
+      limits_config:
+        retention_period: 24h
+
+  promtail:
+    enabled: true
+    config:
+      clients:
+        - url: http://monitoring-loki:3100/loki/api/v1/push
+      scrape_configs:
+        - job_name: jac-pods
+          kubernetes_sd_configs:
+            - role: pod
+          relabel_configs:
+            - source_labels: [__meta_kubernetes_namespace]
+              action: keep
+              regex: jac
+            - source_labels: [__meta_kubernetes_pod_label_app]
+              target_label: app
+            - source_labels: [__meta_kubernetes_namespace]
+              target_label: namespace
+            - source_labels: [__meta_kubernetes_pod_name]
+              target_label: pod
+            - source_labels: [__meta_kubernetes_pod_container_name]
+              target_label: container
+
+  grafana:
+    enabled: false

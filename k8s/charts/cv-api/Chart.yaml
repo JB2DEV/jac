@@ -1,0 +1,14 @@
+apiVersion: v2
+name: cv-api
+description: >
+  jb2dev-cv-api — Portfolio REST API built with Java 21, Spring Boot 3,
+  Hexagonal Architecture and DDD.
+type: application
+version: 0.1.0
+appVersion: "latest"
+home: https://github.com/JB2DEV/jac
+sources:
+  - https://github.com/JB2DEV/jac
+maintainers:
+  - name: jb2dev
+    url: https://github.com/JB2DEV

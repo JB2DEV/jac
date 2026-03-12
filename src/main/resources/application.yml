@@ -25,9 +25,12 @@ management:
       show-details: always
     loggers:
       enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
 
 springdoc:
   api-docs:
     path: /api/v1/openapi
   swagger-ui:
-    path: /api/v1/swagger-ui
+    path: /

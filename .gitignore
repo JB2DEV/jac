@@ -37,3 +37,7 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### K8s ###
+k8s/charts/*/charts/
+k8s/charts/**/*.tgz
