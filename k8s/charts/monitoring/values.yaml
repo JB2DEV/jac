@@ -17,11 +17,17 @@ kube-prometheus-stack:
       enabled: false
     service:
       type: ClusterIP
+    sidecar:
+      datasources:
+        enabled: true
+        defaultDatasourceEnabled: true
     additionalDataSources:
       - name: Loki
         type: loki
         url: http://monitoring-loki:3100
+        access: proxy
         isDefault: false
+        editable: false
         jsonData:
           maxLines: 1000
 
@@ -57,6 +63,14 @@ loki-stack:
     enabled: true
     persistence:
       enabled: false
+    livenessProbe:
+      initialDelaySeconds: 120
+      periodSeconds: 10
+      failureThreshold: 10
+    readinessProbe:
+      initialDelaySeconds: 120
+      periodSeconds: 10
+      failureThreshold: 10
     config:
       auth_enabled: false
       ingester:
@@ -67,6 +81,16 @@ loki-stack:
 
   promtail:
     enabled: true
+    readinessProbe:
+      initialDelaySeconds: 90
+      periodSeconds: 10
+      failureThreshold: 10
+      timeoutSeconds: 5
+    livenessProbe:
+      initialDelaySeconds: 90
+      periodSeconds: 10
+      failureThreshold: 10
+      timeoutSeconds: 5
     config:
       clients:
         - url: http://monitoring-loki:3100/loki/api/v1/push

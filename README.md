@@ -42,6 +42,7 @@ Curriculum Vitae REST API - Portfolio project implementing a Java backend based 
 - [Configuration and Execution](#configuration-and-execution)
 - [Main Endpoints](#main-endpoints)
 - [Docker Quick Start](#docker-quick-start)
+- [Kubernetes Quick Start](#kubernetes-quick-start)
 - [Related Documentation](#related-documentation)
 
 ---
@@ -723,7 +724,7 @@ management:
 
 ### OpenAPI Documentation
 
-- **Swagger UI**: `http://localhost:8080/api/v1/swagger-ui`
+- **Swagger UI**: `http://localhost:8080/`
 - **OpenAPI JSON**: `http://localhost:8080/api/v1/openapi`
 
 ### Resources
@@ -806,10 +807,84 @@ docker-compose down
 
 ---
 
+## Kubernetes Quick Start
+
+Deploy the API in a local Kubernetes cluster using Minikube. The `setup.sh` script handles
+everything automatically — cluster creation, image loading, and Helm chart installation.
+
+### Prerequisites
+
+| Tool      | Min version |
+|-----------|-------------|
+| Docker    | 24+         |
+| Minikube  | 1.32+       |
+| kubectl   | 1.28+       |
+| Helm      | 3.13+       |
+
+### Deployment Modes
+
+```bash
+# Make the script executable (first time only)
+chmod +x k8s/scripts/setup.sh
+
+# API only — fastest setup
+./k8s/scripts/setup.sh
+
+# API + Prometheus + Grafana + Loki
+./k8s/scripts/setup.sh --monitoring
+
+# Full stack — API + Monitoring + Jaeger tracing
+./k8s/scripts/setup.sh --full
+
+# Force a local Docker build instead of pulling from GHCR
+./k8s/scripts/setup.sh --local-build
+```
+
+### Verify the API is running
+
+```bash
+# Add jac.local to your hosts file
+echo "$(minikube ip -p jac-local) jac.local" | sudo tee -a /etc/hosts
+
+# Health check
+curl http://jac.local/actuator/health
+
+# Or use port-forward (no hosts file needed)
+kubectl port-forward -n jac svc/cv-api-cv-api-service 8080:8080
+curl http://localhost:8080/actuator/health
+```
+
+### Observability access (--monitoring / --full)
+
+```bash
+# Grafana — metrics and logs (admin / admin)
+kubectl port-forward -n monitoring svc/kube-prometheus-stack-grafana 3000:80
+# http://localhost:3000
+
+# Jaeger — distributed traces (--full only)
+kubectl port-forward -n monitoring svc/jaeger-query 16686:16686
+# http://localhost:16686
+```
+
+### Teardown
+
+```bash
+# Remove Helm releases, keep Minikube running
+./k8s/scripts/teardown.sh
+
+# Delete the entire cluster
+./k8s/scripts/teardown.sh --all
+```
+
+**See [Kubernetes Guide](k8s/docs/kubernetes.md) for full documentation, chart details, expected outputs, and troubleshooting.**
+
+---
+
 ## Related Documentation
 
 - **[Architecture](docs/architecture.md)** - Comprehensive architecture documentation covering Hexagonal Architecture, DDD patterns, component diagrams, request flows, and design decisions
 - **[Logging System](docs/logging-system.md)** - Detailed logging and observability documentation
 - **[Docker Guide](docs/docker.md)** - Complete guide for building, running, and deploying with Docker
+- **[Kubernetes Guide](k8s/docs/kubernetes.md)** - Local Kubernetes setup with Minikube, Helm charts, observability stack, and troubleshooting
 
 ---

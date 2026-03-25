@@ -1,0 +1,60 @@
+name: Validate Kubernetes Manifests
+
+on:
+  workflow_call:
+
+jobs:
+  k8s-validate:
+    name: Validate Helm Charts & K8s Manifests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: "3.13.3"
+
+      - name: Helm lint — cv-api
+        run: |
+          helm lint k8s/charts/cv-api \
+            --strict \
+            --set "image.tag=ci-test"
+
+      - name: Helm lint — monitoring (estructura local, sin descargar deps)
+        run: |
+          helm lint k8s/charts/monitoring \
+            --skip-schema-validation \
+            --set "prometheusStack.enabled=false" \
+            --set "lokiStack.enabled=false"
+
+      - name: Install kubeconform
+        run: |
+          curl -sSL \
+            https://github.com/yannh/kubeconform/releases/latest/download/kubeconform-linux-amd64.tar.gz \
+            | tar xz -C /usr/local/bin kubeconform
+
+      - name: Render + validar manifiestos cv-api
+        run: |
+          helm template cv-api k8s/charts/cv-api \
+            --namespace jac \
+            --set "image.tag=ci-test" \
+            --set "serviceMonitor.enabled=false" \
+          | kubeconform \
+              --strict \
+              --ignore-missing-schemas \
+              --kubernetes-version 1.28.0 \
+              --summary
+
+      - name: Verificar render de todos los templates
+        run: |
+          helm template cv-api k8s/charts/cv-api \
+            --namespace jac \
+            --set "image.tag=ci-test" \
+            --set "serviceMonitor.enabled=true" \
+            --set "autoscaling.enabled=true" \
+            --set "podDisruptionBudget.enabled=true" \
+            --set "networkPolicy.enabled=true" \
+            > /dev/null
+          echo "Todos los templates renderizan correctamente"

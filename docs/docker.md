@@ -103,7 +103,7 @@ curl http://localhost:8080/actuator/health
 Invoke-WebRequest http://localhost:8080/actuator/health
 
 # Access Swagger UI
-# Open in browser: http://localhost:8080/api/v1/swagger-ui
+# Open in browser: http://localhost:8080/
 ```
 
 ### Stop and Clean Up

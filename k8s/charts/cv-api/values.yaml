@@ -91,6 +91,8 @@ env:
   LOGGING_LEVEL_COM_JB2DEV: "INFO"
   MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: "health,info,prometheus,loggers"
   MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS: "always"
+  SPRINGDOC_SWAGGER_UI_PATH: "/"
+  SPRINGDOC_API_DOCS_PATH: "/api/v1/openapi"
 
 strategy:
   type: RollingUpdate

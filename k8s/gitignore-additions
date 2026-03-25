@@ -1,0 +1,2 @@
+k8s/charts/*/charts/
+k8s/charts/**/*.tgz

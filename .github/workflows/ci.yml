@@ -39,6 +39,11 @@ jobs:
     with:
       push: false
 
+  k8s-validate:
+    name: K8s Manifests
+    needs: build
+    uses: ./.github/workflows/_reusable-k8s-validate.yml
+
   security:
     name: Security Scan
     needs: build
