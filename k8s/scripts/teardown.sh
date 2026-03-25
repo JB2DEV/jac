@@ -13,6 +13,28 @@ set -eo pipefail
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'
 BOLD='\033[1m'; NC='\033[0m'
 
+# ── Trap: always keep the window open; show error details on failure ──────────
+_ERR_LINE=0; _ERR_CMD=""
+_on_err()  { _ERR_LINE=$1; _ERR_CMD=$2; }
+_on_exit() {
+  local code=$?
+  if [ "$code" -ne 0 ]; then
+    echo -e "\n${RED}${BOLD}╔══════════════════════════════════════════════╗${NC}"
+    echo -e "${RED}${BOLD}║   ✗  Teardown FAILED                         ║${NC}"
+    echo -e "${RED}${BOLD}╚══════════════════════════════════════════════╝${NC}"
+    echo -e "\n  ${RED}${BOLD}Exit code : $code${NC}"
+    echo -e "  ${RED}${BOLD}Line      : $_ERR_LINE${NC}"
+    echo -e "  ${RED}${BOLD}Command   : $_ERR_CMD${NC}\n"
+  fi
+  echo -e "${YELLOW}${BOLD}  Press Enter or type 'exit' to close this window...${NC}"
+  while true; do
+    read -r _in < /dev/tty
+    [ "$_in" = "exit" ] || [ -z "$_in" ] && break
+  done
+}
+trap '_on_err $LINENO "$BASH_COMMAND"' ERR
+trap '_on_exit' EXIT
+
 # ── Configuration ─────────────────────────────────────────────────────────────
 MINIKUBE_PROFILE="jac-local"
 RELEASE_API="cv-api"
@@ -109,10 +131,4 @@ else
   echo ""
 fi
 
-# ── Keep the window open ──────────────────────────────────────────────────────
-echo -e "${YELLOW}${BOLD}  Press Enter or type 'exit' to close this window...${NC}"
-while true; do
-  read -r input
-  [ "$input" = "exit" ] || [ -z "$input" ] && break
-done
 

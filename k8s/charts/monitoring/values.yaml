@@ -21,15 +21,6 @@ kube-prometheus-stack:
       datasources:
         enabled: true
         defaultDatasourceEnabled: true
-    additionalDataSources:
-      - name: Loki
-        type: loki
-        url: http://monitoring-loki:3100
-        access: proxy
-        isDefault: false
-        editable: false
-        jsonData:
-          maxLines: 1000
 
   prometheus:
     enabled: true
@@ -61,8 +52,11 @@ kube-prometheus-stack:
 loki-stack:
   loki:
     enabled: true
+    isDefault: false
     persistence:
       enabled: false
+    datasource:
+      jsonData: '{"maxLines": 1000}'
     livenessProbe:
       initialDelaySeconds: 120
       periodSeconds: 10
@@ -87,6 +81,9 @@ loki-stack:
       failureThreshold: 10
       timeoutSeconds: 5
     livenessProbe:
+      httpGet:
+        path: /ready
+        port: http-metrics
       initialDelaySeconds: 90
       periodSeconds: 10
       failureThreshold: 10

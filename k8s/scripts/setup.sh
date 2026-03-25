@@ -19,6 +19,28 @@ set -eo pipefail
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'
 BLUE='\033[0;34m'; BOLD='\033[1m'; NC='\033[0m'
 
+# ── Trap: always keep the window open; show error details on failure ──────────
+_ERR_LINE=0; _ERR_CMD=""
+_on_err()  { _ERR_LINE=$1; _ERR_CMD=$2; }
+_on_exit() {
+  local code=$?
+  if [ "$code" -ne 0 ]; then
+    echo -e "\n${RED}${BOLD}╔══════════════════════════════════════════════╗${NC}"
+    echo -e "${RED}${BOLD}║   ✗  Setup FAILED                            ║${NC}"
+    echo -e "${RED}${BOLD}╚══════════════════════════════════════════════╝${NC}"
+    echo -e "\n  ${RED}${BOLD}Exit code : $code${NC}"
+    echo -e "  ${RED}${BOLD}Line      : $_ERR_LINE${NC}"
+    echo -e "  ${RED}${BOLD}Command   : $_ERR_CMD${NC}\n"
+  fi
+  echo -e "${YELLOW}${BOLD}  Press Enter or type 'exit' to close this window...${NC}"
+  while true; do
+    read -r _in < /dev/tty
+    [ "$_in" = "exit" ] || [ -z "$_in" ] && break
+  done
+}
+trap '_on_err $LINENO "$BASH_COMMAND"' ERR
+trap '_on_exit' EXIT
+
 # ── Paths ─────────────────────────────────────────────────────────────────────
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
@@ -202,10 +224,14 @@ deploy_monitoring() {
   local deadline=$(( $(date +%s) + 600 ))   # 10 min hard limit
   while true; do
     local unready
+    # Count pods whose READY column is not "x/x".
+    # awk does the counting directly to avoid grep exit-1-on-no-match
+    # breaking the pipeline when all pods are Ready (set -eo pipefail).
+    # The `|| unready=0` fallback handles transient kubectl failures.
     unready=$(kubectl get pods -n "$NAMESPACE_MONITORING" \
       --no-headers 2>/dev/null \
-      | awk '{split($2,a,"/"); if(a[1]!=a[2]) print $1}' \
-      | grep -v "^$" | wc -l | tr -d ' ')
+      | awk 'BEGIN{n=0} {split($2,a,"/"); if(a[1]!=a[2]) n++} END{print n}') \
+      || unready=0
 
     if [ "$unready" -eq 0 ]; then
       break
@@ -354,10 +380,4 @@ deploy_api
 configure_hosts
 print_summary
 
-# ── Keep the window open ──────────────────────────────────────────────────────
-echo -e "${YELLOW}${BOLD}  Press Enter or type 'exit' to close this window...${NC}"
-while true; do
-  read -r input
-  [ "$input" = "exit" ] || [ -z "$input" ] && break
-done
 
