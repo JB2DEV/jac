@@ -7,7 +7,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: jaeger
-    {{- include "monitoring.labels" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
@@ -78,5 +77,5 @@ spec:
     - name: collector-http
       port: 14268
       targetPort: 14268
-  {{- end }}
+{{- end }}
 ---

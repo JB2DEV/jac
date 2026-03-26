@@ -28,6 +28,12 @@ management:
   metrics:
     tags:
       application: ${spring.application.name}
+  tracing:
+    sampling:
+      probability: 1.0
+  otlp:
+    tracing:
+      endpoint: http://jaeger-collector.monitoring:4318/v1/traces
 
 springdoc:
   api-docs:
