@@ -25,9 +25,18 @@ management:
       show-details: always
     loggers:
       enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+  tracing:
+    sampling:
+      probability: 1.0
+  otlp:
+    tracing:
+      endpoint: http://jaeger-collector.monitoring:4318/v1/traces
 
 springdoc:
   api-docs:
     path: /api/v1/openapi
   swagger-ui:
-    path: /api/v1/swagger-ui
+    path: /

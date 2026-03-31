@@ -24,7 +24,7 @@ class GlobalExceptionHandlerE2ETest {
 
     @Test
     void shouldNotBreakSwaggerUI() throws Exception {
-        mockMvc.perform(get("/api/v1/swagger-ui"))
+        mockMvc.perform(get("/"))
                 .andExpect(status().is3xxRedirection());
     }
 

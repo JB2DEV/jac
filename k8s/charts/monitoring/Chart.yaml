@@ -1,0 +1,18 @@
+apiVersion: v2
+name: monitoring
+description: >
+  Stack de observabilidad para jb2dev-cv-api.
+  Umbrella chart que agrupa Prometheus, Grafana y Loki
+  con configuración lista para Minikube local.
+type: application
+version: 0.1.0
+dependencies:
+  - name: kube-prometheus-stack
+    version: "56.21.4"
+    repository: "https://prometheus-community.github.io/helm-charts"
+    condition: prometheusStack.enabled
+
+  - name: loki-stack
+    version: "2.10.2"
+    repository: "https://grafana.github.io/helm-charts"
+    condition: lokiStack.enabled
