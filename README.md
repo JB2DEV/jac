@@ -20,29 +20,30 @@ Curriculum Vitae REST API - Portfolio project implementing a Java backend based 
 - [Architecture](#architecture)
 - [Project Structure](#project-structure)
 - [Domain Model (DDD)](#domain-model-ddd)
-  - [Aggregates and Entities](#aggregates-and-entities)
-  - [Value Objects](#value-objects)
-  - [Ports (Interfaces)](#ports-interfaces)
-  - [Domain Exceptions](#domain-exceptions)
+    - [Aggregates and Entities](#aggregates-and-entities)
+    - [Value Objects](#value-objects)
+    - [Ports (Interfaces)](#ports-interfaces)
+    - [Domain Exceptions](#domain-exceptions)
 - [Use Cases (Application Layer)](#use-cases-application-layer)
-  - [Organization](#organization)
-  - [Naming Convention](#naming-convention)
-  - [Execution Flow](#execution-flow)
+    - [Organization](#organization)
+    - [Naming Convention](#naming-convention)
+    - [Execution Flow](#execution-flow)
 - [Infrastructure](#infrastructure)
-  - [REST Adapters](#rest-adapters)
-  - [Persistence (JSON-backed)](#persistence-json-backed)
-  - [Logging and Correlation](#logging-and-correlation)
-  - [Security](#security)
+    - [REST Adapters](#rest-adapters)
+    - [Persistence (JSON-backed)](#persistence-json-backed)
+    - [Logging and Correlation](#logging-and-correlation)
+    - [Security](#security)
 - [Testing](#testing)
-  - [Strategy by Layer](#strategy-by-layer)
-  - [Running Tests](#running-tests)
-  - [Coverage](#coverage)
+    - [Strategy by Layer](#strategy-by-layer)
+    - [Running Tests](#running-tests)
+    - [Coverage](#coverage)
 - [DevOps](#devops)
 - [Technologies](#technologies)
 - [Configuration and Execution](#configuration-and-execution)
 - [Main Endpoints](#main-endpoints)
-- [Important Conventions and Rules](#important-conventions-and-rules)
-- [How to Contribute](#how-to-contribute)
+- [Docker Quick Start](#docker-quick-start)
+- [Kubernetes Quick Start](#kubernetes-quick-start)
+- [Related Documentation](#related-documentation)
 
 ---
 
@@ -235,13 +236,13 @@ All entities are modeled as **Java Records** (immutable by design).
 
 ```java
 public record EducationItem(
-    int id,
-    String title,
-    String institution,
-    String location,
-    LocalDate startDate,
-    LocalDate endDate,
-    String details
+        int id,
+        String title,
+        String institution,
+        String location,
+        LocalDate startDate,
+        LocalDate endDate,
+        String details
 ) {}
 ```
 
@@ -260,8 +261,8 @@ Ports are **interfaces defined in the domain** that abstract external dependenci
 
 ```java
 public interface EducationRepository {
-  List<EducationItem> findAllEducations(Language language);
-  Optional<EducationItem> findEducationById(int id, Language language);
+    List<EducationItem> findAllEducations(Language language);
+    Optional<EducationItem> findEducationById(int id, Language language);
 }
 ```
 
@@ -338,20 +339,20 @@ Use cases represent **explicit business intentions**. Each use case:
 ```java
 @FunctionalInterface
 public interface GetEducationUseCase {
-  EducationItem execute(int id, Language language);
+    EducationItem execute(int id, Language language);
 }
 
 @Service
 @RequiredArgsConstructor
 public class GetEducationInteractor implements GetEducationUseCase {
-  private final EducationRepository educationRepository;
-  
-  @Override
-  public EducationItem execute(int id, Language language) {
-    log.info("Executing GetEducation use case: id={}, language={}", id, language);
-    return educationRepository.findEducationById(id, language)
-        .orElseThrow(() -> new ResourceNotFoundException("Education", String.valueOf(id)));
-  }
+    private final EducationRepository educationRepository;
+
+    @Override
+    public EducationItem execute(int id, Language language) {
+        log.info("Executing GetEducation use case: id={}, language={}", id, language);
+        return educationRepository.findEducationById(id, language)
+                .orElseThrow(() -> new ResourceNotFoundException("Education", String.valueOf(id)));
+    }
 }
 ```
 
@@ -380,17 +381,17 @@ Responsibilities:
 @RestController
 @RequestMapping("/api/v1/education")
 public class EducationController {
-  private final GetEducationUseCase getByIdUseCase;
-  private final EducationRestMapper mapper;
-  
-  @GetMapping("/{id}")
-  public ResponseEntity<EducationResponse> getById(
-      @PathVariable int id,
-      @RequestHeader(value = "Accept-Language", defaultValue = "es_ES") String lang) {
-    Language language = Language.fromCode(lang);
-    EducationItem item = getByIdUseCase.execute(id, language);
-    return ResponseEntity.ok(mapper.toResponse(item));
-  }
+    private final GetEducationUseCase getByIdUseCase;
+    private final EducationRestMapper mapper;
+
+    @GetMapping("/{id}")
+    public ResponseEntity<EducationResponse> getById(
+            @PathVariable int id,
+            @RequestHeader(value = "Accept-Language", defaultValue = "es_ES") String lang) {
+        Language language = Language.fromCode(lang);
+        EducationItem item = getByIdUseCase.execute(id, language);
+        return ResponseEntity.ok(mapper.toResponse(item));
+    }
 }
 ```
 
@@ -419,13 +420,13 @@ The system implements **structured logging** with **distributed correlation**.
 2. **MDC (Mapped Diagnostic Context)**: Each log automatically includes the `correlationId`.
 
 3. **Layer-based configuration**:
-   - **Domain**: No technical logging (pure logic).
-   - **Application**: Business event logging (`log.info`, `log.debug`).
-   - **Infrastructure**: Complete technical logging.
+    - **Domain**: No technical logging (pure logic).
+    - **Application**: Business event logging (`log.info`, `log.debug`).
+    - **Infrastructure**: Complete technical logging.
 
 4. **Formats**:
-   - **Development**: Human-readable logs in console.
-   - **Production**: Structured JSON (Logstash encoder) for aggregators (ELK, Grafana Loki).
+    - **Development**: Human-readable logs in console.
+    - **Production**: Structured JSON (Logstash encoder) for aggregators (ELK, Grafana Loki).
 
 **Dynamic management**: Endpoint `/actuator/loggers` allows changing log levels at runtime.
 
@@ -460,17 +461,17 @@ See full documentation at: [`docs/logging-system.md`](docs/logging-system.md)
 ```java
 @ExtendWith(MockitoExtension.class)
 class GetEducationInteractorTest {
-  @Mock private EducationRepository repository;
-  @InjectMocks private GetEducationInteractor interactor;
-  
-  @Test
-  void shouldThrowExceptionWhenEducationNotFound() {
-    when(repository.findEducationById(999, Language.EN_EN))
-        .thenReturn(Optional.empty());
-    
-    assertThatThrownBy(() -> interactor.execute(999, Language.EN_EN))
-        .isInstanceOf(ResourceNotFoundException.class);
-  }
+    @Mock private EducationRepository repository;
+    @InjectMocks private GetEducationInteractor interactor;
+
+    @Test
+    void shouldThrowExceptionWhenEducationNotFound() {
+        when(repository.findEducationById(999, Language.EN_EN))
+                .thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> interactor.execute(999, Language.EN_EN))
+                .isInstanceOf(ResourceNotFoundException.class);
+    }
 }
 ```
 
@@ -484,14 +485,14 @@ class GetEducationInteractorTest {
 ```java
 @SpringBootTest
 class JsonEducationQueryAdapterIntegrationTest {
-  @Autowired
-  private JsonEducationQueryAdapter adapter;
-  
-  @Test
-  void shouldFindAllEducationsInEnglish() {
-    List<EducationItem> result = adapter.findAllEducations(Language.EN_EN);
-    assertThat(result).isNotEmpty();
-  }
+    @Autowired
+    private JsonEducationQueryAdapter adapter;
+
+    @Test
+    void shouldFindAllEducationsInEnglish() {
+        List<EducationItem> result = adapter.findAllEducations(Language.EN_EN);
+        assertThat(result).isNotEmpty();
+    }
 }
 ```
 
@@ -529,9 +530,105 @@ Reports generated at: `target/site/jacoco/index.html`
 
 ## DevOps
 
-### CI/CD
+### CI / CD / CD
 
-**Current status**: TODO
+The pipeline covers the three practices end to end:
+
+| Practice | Definition | Implementation |
+|----------|-----------|----------------|
+| **Continuous Integration** | Every change is validated automatically | GitHub Actions — `ci.yml` |
+| **Continuous Delivery** | A release-ready artifact is produced on demand | GitHub Actions — release pipeline |
+| **Continuous Deployment** | The artifact is deployed to production automatically | [Render](https://render.com) — watches GHCR, deploys on new image |
+
+All GitHub Actions workflows are built on reusable workflows and a shared composite action (`setup-java-maven`).
+
+---
+
+#### Continuous Integration — `ci.yml`
+
+Triggered on every push to `develop` and on every PR targeting `develop` or `main`.
+
+```
+build → unit-tests → integration-tests
+```
+
+Tests are separated by **package structure** (no annotations required):
+
+| Package | Type | Spring Context |
+|---------|------|----------------|
+| `domain/`, `application/` | Unit tests | No |
+| `infrastructure/` | Integration tests | Yes (`@SpringBootTest`) |
+
+Results are published to the GitHub Checks tab via `dorny/test-reporter`.
+
+→ See [`.github/workflows/docs/ci.md`](.github/workflows/docs/ci.md)
+
+---
+
+#### Continuous Delivery — Release Pipeline
+
+Three-workflow chain triggered manually with a single version input:
+
+```
+[Manual] prepare-release.yml
+    │  Bumps version in 5 files, opens PR: develop → main
+    ▼
+[Automatic] auto-tag.yml          (on PR merge)
+    │  Creates annotated tag vX.Y.Z on main
+    ▼
+[Automatic] release.yml           (on tag push)
+    ├── validate        → full test suite + JaCoCo ≥ 80%
+    ├── build-jar       → production JAR artifact
+    ├── docker-release  → image pushed to GHCR (parallel with JAR)
+    ├── create-release  → GitHub Release with auto-generated changelog
+    └── sync-develop    → PR main → develop for post-release sync
+```
+
+**Only two manual actions required per release:** run `prepare-release` → merge the PR.
+
+→ See [`.github/workflows/docs/prepare-release.md`](.github/workflows/docs/prepare-release.md) · [`.github/workflows/docs/auto-tag.md`](.github/workflows/docs/auto-tag.md) · [`.github/workflows/docs/release.md`](.github/workflows/docs/release.md)
+
+---
+
+#### Continuous Deployment — Render
+
+Deployment to production is managed automatically by **[Render](https://render.com)**, a cloud platform that monitors the Docker image registry (GHCR). When `release.yml` pushes a new `latest` image, Render detects the update and redeploys the service automatically — no manual intervention required.
+
+```
+release.yml pushes ghcr.io/jb2dev/jac:latest
+    └──► Render detects new image
+             └──► Zero-downtime redeploy to production
+```
+
+> Render is currently used as a third-party deployment solution. This may evolve to a self-managed deployment strategy in the future.
+
+---
+
+#### Security Scan — `security.yml`
+
+Runs every **Monday at 3 AM UTC** (and on demand). Performs:
+
+- **SonarCloud** — static analysis, code smells, vulnerability detection
+- **TruffleHog** — git history scan for exposed secrets
+
+→ See [`.github/workflows/docs/security.md`](.github/workflows/docs/security.md)
+
+---
+
+#### Reusable Workflows
+
+All jobs delegate to reusable workflows under `.github/workflows/_reusable-*.yml`:
+
+| Workflow | Responsibility |
+|----------|----------------|
+| `_reusable-build.yml` | Compile with Maven |
+| `_reusable-unit-tests.yml` | Run domain + application tests |
+| `_reusable-integration-tests.yml` | Run infrastructure tests |
+| `_reusable-quality.yml` | SonarCloud analysis (coverage + quality gate) |
+| `_reusable-security.yml` | TruffleHog secret scan |
+| `_reusable-docker.yml` | Build and push Docker image to GHCR |
+
+→ See [`.github/workflows/docs/`](.github/workflows/docs/)
 
 ---
 
@@ -541,8 +638,8 @@ Reports generated at: `target/site/jacoco/index.html`
 
 - **Java 21** (LTS)
 - **Spring Boot 3.4.1**
-  - `spring-boot-starter-web` (REST)
-  - `spring-boot-starter-actuator` (Observability)
+    - `spring-boot-starter-web` (REST)
+    - `spring-boot-starter-actuator` (Observability)
 - **Maven 3.9+**
 
 ### Libraries and Tools
@@ -627,7 +724,7 @@ management:
 
 ### OpenAPI Documentation
 
-- **Swagger UI**: `http://localhost:8080/api/v1/swagger-ui`
+- **Swagger UI**: `http://localhost:8080/`
 - **OpenAPI JSON**: `http://localhost:8080/api/v1/openapi`
 
 ### Resources
@@ -710,10 +807,84 @@ docker-compose down
 
 ---
 
+## Kubernetes Quick Start
+
+Deploy the API in a local Kubernetes cluster using Minikube. The `setup.sh` script handles
+everything automatically — cluster creation, image loading, and Helm chart installation.
+
+### Prerequisites
+
+| Tool      | Min version |
+|-----------|-------------|
+| Docker    | 24+         |
+| Minikube  | 1.32+       |
+| kubectl   | 1.28+       |
+| Helm      | 3.13+       |
+
+### Deployment Modes
+
+```bash
+# Make the script executable (first time only)
+chmod +x k8s/scripts/setup.sh
+
+# API only — fastest setup
+./k8s/scripts/setup.sh
+
+# API + Prometheus + Grafana + Loki
+./k8s/scripts/setup.sh --monitoring
+
+# Full stack — API + Monitoring + Jaeger tracing
+./k8s/scripts/setup.sh --full
+
+# Force a local Docker build instead of pulling from GHCR
+./k8s/scripts/setup.sh --local-build
+```
+
+### Verify the API is running
+
+```bash
+# Add jac.local to your hosts file
+echo "$(minikube ip -p jac-local) jac.local" | sudo tee -a /etc/hosts
+
+# Health check
+curl http://jac.local/actuator/health
+
+# Or use port-forward (no hosts file needed)
+kubectl port-forward -n jac svc/cv-api-cv-api-service 8080:8080
+curl http://localhost:8080/actuator/health
+```
+
+### Observability access (--monitoring / --full)
+
+```bash
+# Grafana — metrics and logs (admin / admin)
+kubectl port-forward -n monitoring svc/kube-prometheus-stack-grafana 3000:80
+# http://localhost:3000
+
+# Jaeger — distributed traces (--full only)
+kubectl port-forward -n monitoring svc/jaeger-query 16686:16686
+# http://localhost:16686
+```
+
+### Teardown
+
+```bash
+# Remove Helm releases, keep Minikube running
+./k8s/scripts/teardown.sh
+
+# Delete the entire cluster
+./k8s/scripts/teardown.sh --all
+```
+
+**See [Kubernetes Guide](k8s/docs/kubernetes.md) for full documentation, chart details, expected outputs, and troubleshooting.**
+
+---
+
 ## Related Documentation
 
 - **[Architecture](docs/architecture.md)** - Comprehensive architecture documentation covering Hexagonal Architecture, DDD patterns, component diagrams, request flows, and design decisions
 - **[Logging System](docs/logging-system.md)** - Detailed logging and observability documentation
 - **[Docker Guide](docs/docker.md)** - Complete guide for building, running, and deploying with Docker
+- **[Kubernetes Guide](k8s/docs/kubernetes.md)** - Local Kubernetes setup with Minikube, Helm charts, observability stack, and troubleshooting
 
 ---
