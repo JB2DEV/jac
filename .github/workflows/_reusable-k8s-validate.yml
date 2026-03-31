@@ -25,7 +25,6 @@ jobs:
       - name: Helm lint — monitoring (estructura local, sin descargar deps)
         run: |
           helm lint k8s/charts/monitoring \
-            --skip-schema-validation \
             --set "prometheusStack.enabled=false" \
             --set "lokiStack.enabled=false"
 
