@@ -356,7 +356,7 @@ local development and demo purposes.
 
 ```bash
 # Check Jaeger pod
-kubectl get pods -n monitoring -l app=jaeger
+kubectl get pods -n monitoring -l app.kubernetes.io/name=jaeger
 
 # Expected:
 # NAME           READY   STATUS    AGE
@@ -631,4 +631,23 @@ curl http://jac.local/api/v1/profile/personal
 curl http://jac.local/actuator/health
 ```
 
+### Jaeger troubleshooting
 
+```bash
+# Check Jaeger pod
+kubectl get pods -n monitoring -l app.kubernetes.io/name=jaeger
+
+# Expected:
+# NAME           READY   STATUS    AGE
+# jaeger-xxxx    1/1     Running   2m
+
+# Check Jaeger service
+kubectl get svc -n monitoring -l app.kubernetes.io/name=jaeger
+
+# Expected:
+# NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+# jaeger-query    ClusterIP   10.96.0.1      <none>        16686/TCP   2m
+
+# Check Jaeger logs
+kubectl logs -n monitoring -l app.kubernetes.io/name=jaeger
+```
